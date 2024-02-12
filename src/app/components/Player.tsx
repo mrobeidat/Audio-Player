@@ -13,6 +13,8 @@ const Player: React.FC<PlayerProps> = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const audioPlayer = useRef(null);
+
+  // To play and pause the audio player
   const togglePlayPause = () => {
     const previousState = isPlaying;
     setIsPlaying(!previousState);
@@ -23,15 +25,21 @@ const Player: React.FC<PlayerProps> = () => {
       audioPlayer.current.pause();
     }
   };
+
+  // To Mute and Unmute the audio player
   const toggleMuteUnmute = () => {
-    setIsMuted(!isMuted);
+    const audioElement = document.getElementById("audio") as HTMLAudioElement;
+    if (audioElement) {
+      audioElement.muted = !audioElement.muted;
+      setIsMuted(audioElement.muted);
+    } else {
+      console.log("No audio element found");
+    }
   };
 
   return (
     <div className="bg-black flex h-50 w-377 rounded-lg p-3 items-center gap-2">
-      <audio ref={audioPlayer} src={Audios.Piano}>
-        <source id="audio-player" src={Audios.Piano} type="audio/mp3" />
-      </audio>
+      <audio id="audio" ref={audioPlayer} src={Audios.Piano}></audio>
       <Image src={Images.Backward} alt="backward" />
       <button onClick={togglePlayPause}>
         {isPlaying ? (
@@ -45,9 +53,9 @@ const Player: React.FC<PlayerProps> = () => {
       <input type="range" className="overflow-hidden progressBar" />
       <button onClick={toggleMuteUnmute}>
         {isMuted ? (
-          <Image src={Images.Unmute} alt="unmute" />
+          <Image src={Images.Mute} alt="unmute" />
         ) : (
-          <Image src={Images.Mute} alt="mute" />
+          <Image src={Images.Unmute} alt="mute" />
         )}
       </button>
     </div>
