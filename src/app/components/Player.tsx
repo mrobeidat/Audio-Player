@@ -1,18 +1,27 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 
-// Importing images for player controls
+// Importing Images for player controls
 import Images from "./Images";
+// Importing the audio file
+import Audios from "./Audio";
 
 interface PlayerProps {}
 
 const Player: React.FC<PlayerProps> = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
-
+  const audioPlayer = useRef(null);
   const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
+    const previousState = isPlaying;
+    setIsPlaying(!previousState);
+
+    if (!previousState) {
+      audioPlayer.current.play();
+    } else {
+      audioPlayer.current.pause();
+    }
   };
   const toggleMuteUnmute = () => {
     setIsMuted(!isMuted);
@@ -20,7 +29,9 @@ const Player: React.FC<PlayerProps> = () => {
 
   return (
     <div className="bg-black flex h-50 w-377 rounded-lg p-3 items-center gap-2">
-      <audio src="https://samples-files.com/samples/Audio/mp3/sample-file-2.mp3"></audio>
+      <audio ref={audioPlayer} src={Audios.Piano}>
+        <source id="audio-player" src={Audios.Piano} type="audio/mp3" />
+      </audio>
       <Image src={Images.Backward} alt="backward" />
       <button onClick={togglePlayPause}>
         {isPlaying ? (
