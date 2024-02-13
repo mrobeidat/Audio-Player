@@ -78,9 +78,8 @@ const UserActions: React.FC = () => {
               data-aos="fade-up"
               data-aos-easing="ease-in"
               data-aos-once="true"
-              data-aos-delay={`${index * 100}`} // Adjust the delay duration as needed
+              data-aos-delay={`${index * 100}`}
               key={index}
-              aria-current="true"
               className="block w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-red-950 dark:border-gray-600 dark:text-white hover:bg-blue-100 useraction-description focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-gray-600"
             >
               <div className="flex sm:flex-row gap-2 items-center">
@@ -92,9 +91,7 @@ const UserActions: React.FC = () => {
                       alt="Play"
                       src={Images.Play}
                     />
-                    <p>{`Audio Played about ${formatDate(
-                      action.createdAt
-                    )}`}</p>
+                    <p>{`Audio Played ${formatDate(action.createdAt)}`}</p>
                   </div>
                 )}
                 {action.userAction === "Forward" && (
@@ -105,9 +102,7 @@ const UserActions: React.FC = () => {
                       alt="Forward"
                       src={Images.Forward}
                     />
-                    <p>{`Audio Forwarded the music about ${formatDate(
-                      action.createdAt
-                    )}`}</p>
+                    <p>{`Audio Forwarded ${formatDate(action.createdAt)}`}</p>
                   </div>
                 )}
                 {action.userAction === "Backward" && (
@@ -118,9 +113,7 @@ const UserActions: React.FC = () => {
                       alt="Backward"
                       src={Images.Backward}
                     />
-                    <p>{`Audio Backwarded about ${formatDate(
-                      action.createdAt
-                    )}`}</p>
+                    <p>{`Audio Backwarded ${formatDate(action.createdAt)}`}</p>
                   </div>
                 )}
                 {action.userAction === "Pause" && (
@@ -131,9 +124,7 @@ const UserActions: React.FC = () => {
                       alt="Pause"
                       src={Images.Pause}
                     />
-                    <p>{`Audio Paused about ${formatDate(
-                      action.createdAt
-                    )}`}</p>
+                    <p>{`Audio Paused ${formatDate(action.createdAt)}`}</p>
                   </div>
                 )}
                 {action.userAction === "Mute" && (
@@ -144,7 +135,7 @@ const UserActions: React.FC = () => {
                       alt="Mute"
                       src={Images.Mute}
                     />
-                    <p>{`Audio Muted about ${formatDate(action.createdAt)}`}</p>
+                    <p>{`Audio Muted ${formatDate(action.createdAt)}`}</p>
                   </div>
                 )}
                 {action.userAction === "Unmute" && (
@@ -155,9 +146,7 @@ const UserActions: React.FC = () => {
                       alt="Unmute"
                       src={Images.Unmute}
                     />
-                    <p>{`Audio Unmuted about ${formatDate(
-                      action.createdAt
-                    )}`}</p>
+                    <p>{`Audio Unmuted ${formatDate(action.createdAt)}`}</p>
                   </div>
                 )}
               </div>
