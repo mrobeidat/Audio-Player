@@ -1,10 +1,10 @@
 "use client";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-
-import Images from "./Images"; // Importing Images for audio controls
+import Images from "./Shared/Images"; // Importing Images for audio controls
 import Audios from "./Audio"; // Importing the audio file
 import Link from "next/link";
+import Particle from "./Shared/Particle";
 
 interface PlayerProps {}
 
@@ -145,6 +145,7 @@ const Player: React.FC<PlayerProps> = () => {
   };
   return (
     <div className="flex flex-col gap-7 justify-center items-center">
+              <Particle />
       <div
         className="bg-black flex h-50 w-377 rounded-lg p-3 items-center gap-1"
         data-aos="fade-down"

@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Images from "../components/Images";
+import Images from "../components/Shared/Images";
 import Image from "next/image";
 import { formatDate } from "../../../libs/utils";
 import Link from "next/link";
+import Particle from "../components/Shared/Particle";
 
 interface UserAction {
   userAction: string;
@@ -72,6 +73,7 @@ const UserActions: React.FC = () => {
       </Link>
 
       <div className="items-center justify-center h-screen grid grid-cols-3 gap-2 p-4 sm:p-32 flex-col parent mb-4">
+        <Particle />
         {Actions.filter((action) => action.userAction !== "")
           .sort(
             (a, b) =>
