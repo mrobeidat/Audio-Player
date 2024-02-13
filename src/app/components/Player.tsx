@@ -13,9 +13,9 @@ const Player: React.FC<PlayerProps> = () => {
   const [duration, setDuration] = useState<number>(0);
   const [currentTime, setCurrentTime] = useState<number>(0);
 
-  const audioPlayer = useRef<HTMLAudioElement | null>(null); // reference to audio player
-  const progressBar = useRef<HTMLInputElement | null>(null); // reference to progress bar
-  const animationRef = useRef<number | null>(null); // reference to animation
+  const audioPlayer = useRef(null); // reference to audio player
+  const progressBar = useRef(null); // reference to progress bar
+  const animationRef = useRef(null); // reference to animation
 
   useEffect(() => {
     const audioElement = audioPlayer.current;
@@ -26,8 +26,8 @@ const Player: React.FC<PlayerProps> = () => {
     // reset the progressBar and currentTime to 0
     const handleEnded = () => {
       setIsPlaying(false);
-      setCurrentTime(0);
-      progressElement.value = "0";
+      setCurrentTime((audioPlayer.current.currentTime = 0)); // reset the current time
+      progressBar.current.value = 0; // reset the progressbar position
     };
 
     audioElement.addEventListener("ended", handleEnded);
