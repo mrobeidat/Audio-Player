@@ -10,6 +10,10 @@ module.exports = {
       width: {
         377: "377px",
       },
+      colors: {
+        customPurple: "rgba(201, 37, 107, 1)",
+        customPink: "rgba(116, 16, 124, 1)",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

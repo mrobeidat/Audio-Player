@@ -5,3 +5,21 @@
 /* importing player styles */
 @import "player";
 
+.useraction-description:hover {
+  background-image: linear-gradient(
+    134.6deg,
+    rgba(201, 37, 107, 1) 15.4%,
+    rgba(116, 16, 124, 1) 74.7%
+  );
+  background-repeat: no-repeat;
+  border: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .parent {
+    display: block;
+  }
+  body{
+    background-repeat: no-repeat;  
+  }
+}

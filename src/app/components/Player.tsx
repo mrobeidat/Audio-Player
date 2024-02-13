@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import Images from "./Images"; // Importing Images for audio controls
 import Audios from "./Audio"; // Importing the audio file
+import Link from "next/link";
 
 interface PlayerProps {}
 
@@ -16,6 +17,22 @@ const Player: React.FC<PlayerProps> = () => {
   const audioPlayer = useRef(null); // reference to audio player
   const progressBar = useRef(null); // reference to progress bar
   const animationRef = useRef(null); // reference to animation
+
+  // To handle the user interaction with the audio player
+  const handleClick = async (action: string) => {
+    try {
+      await fetch("/api/useractions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userAction: action }),
+      });
+      console.log("success");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const audioElement = audioPlayer.current;
@@ -55,6 +72,8 @@ const Player: React.FC<PlayerProps> = () => {
       audioPlayer.current.pause();
       cancelAnimationFrame(animationRef.current!);
     }
+    // Logging the userAction to DB
+    handleClick(isPlaying ? "Pause" : "Play");
   };
 
   // To Mute and Unmute the audio player
@@ -64,6 +83,9 @@ const Player: React.FC<PlayerProps> = () => {
 
     audioElement.muted = !audioElement.muted;
     setIsMuted(audioElement.muted);
+
+    // Logging the userAction to DB
+    handleClick(isMuted ? "Unmute" : "Mute");
   };
 
   // To calculate the duration
@@ -106,6 +128,9 @@ const Player: React.FC<PlayerProps> = () => {
 
     progressBar.current.value = String(Number(progressBar.current.value) - 5);
     handleChangeRange();
+
+    // Logging the userAction to DB
+    handleClick("Backward");
   };
 
   // To forward the audio 5 seconds after
@@ -114,67 +139,89 @@ const Player: React.FC<PlayerProps> = () => {
 
     progressBar.current.value = String(Number(progressBar.current.value) + 5);
     handleChangeRange();
+
+    // Logging the userAction to DB
+    handleClick("Forward");
   };
   return (
-    <div className="bg-black flex h-50 w-377 rounded-lg p-3 items-center gap-1">
-      <audio id="audio" ref={audioPlayer} src={Audios.Piano}></audio>
+    <div className="flex flex-col gap-7 justify-center items-center">
+      <div
+        className="bg-black flex h-50 w-377 rounded-lg p-3 items-center gap-1"
+        data-aos="fade-down"
+        data-aos-once="true"
+      >
+        <audio id="audio" ref={audioPlayer} src={Audios.Piano}></audio>
 
-      {/* backward button */}
-      <Image
-        onClick={Backward}
-        src={Images.Backward}
-        alt="backward"
-        className="cursor-pointer object-contain min-w-7 min-h-7"
-      />
+        {/* backward button */}
+        <Image
+          onClick={Backward}
+          src={Images.Backward}
+          alt="backward"
+          className="cursor-pointer object-contain min-w-7 min-h-7"
+          draggable="false"
+        />
 
-      {/* Toggle Play/Pause button */}
-      <button onClick={togglePlayPause}>
-        {isPlaying ? (
-          <Image
-            src={Images.Pause}
-            alt="pause"
-            className="object-contain min-w-8 min-h-7"
-          />
-        ) : (
-          <Image
-            src={Images.Play}
-            alt="play"
-            className="object-contain min-w-8 min-h-7"
-          />
-        )}
-      </button>
+        {/* Toggle Play/Pause button */}
+        <button onClick={togglePlayPause}>
+          {isPlaying ? (
+            <Image
+              src={Images.Pause}
+              alt="pause"
+              className="object-contain min-w-8 min-h-7"
+              draggable="false"
+            />
+          ) : (
+            <Image
+              src={Images.Play}
+              alt="play"
+              className="object-contain min-w-8 min-h-7"
+              draggable="false"
+            />
+          )}
+        </button>
 
-      {/* forward button */}
-      <Image
-        onClick={Forward}
-        src={Images.Forward}
-        alt="forward"
-        className="cursor-pointer object-contain min-w-7 min-h-7"
-      />
+        {/* forward button */}
+        <Image
+          onClick={Forward}
+          src={Images.Forward}
+          alt="forward"
+          className="cursor-pointer object-contain min-w-7 min-h-7"
+          draggable="false"
+        />
 
-      {/* currentTime & duration */}
-      <div className="text-white">
-        {calculateDuration(currentTime)}/
-        {(duration && !isNaN(duration)) && calculateDuration(duration)}
+        {/* currentTime & duration */}
+        <div className="text-white">
+          {calculateDuration(currentTime)}/
+          {duration && !isNaN(duration) && calculateDuration(duration)}
+        </div>
+
+        {/* progressBar */}
+        <input
+          type="range"
+          className="overflow-hidden progressBar"
+          defaultValue="0"
+          ref={progressBar}
+          onChange={handleChangeRange}
+        />
+
+        {/* Toggle Mute/Unmute button */}
+        <button onClick={toggleMuteUnmute}>
+          {isMuted ? (
+            <Image src={Images.Mute} alt="unmute" draggable="false" />
+          ) : (
+            <Image src={Images.Unmute} alt="mute" draggable="false" />
+          )}
+        </button>
       </div>
-
-      {/* progressBar */}
-      <input
-        type="range"
-        className="overflow-hidden progressBar"
-        defaultValue="0"
-        ref={progressBar}
-        onChange={handleChangeRange}
-      />
-
-      {/* Toggle Mute/Unmute button */}
-      <button onClick={toggleMuteUnmute}>
-        {isMuted ? (
-          <Image src={Images.Mute} alt="unmute" />
-        ) : (
-          <Image src={Images.Unmute} alt="mute" />
-        )}
-      </button>
+      <Link
+        data-aos="fade-up"
+        data-aos-once="true"
+        style={{ backgroundColor: "#f14f68" }}
+        className="text-white rounded-lg p-3 hover:bg-fuchsia-400"
+        href={"/useractions"}
+      >
+        View User Actions
+      </Link>
     </div>
   );
 };

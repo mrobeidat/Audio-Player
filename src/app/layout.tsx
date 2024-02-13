@@ -2,6 +2,7 @@ import React from "react";
 import { Inter } from "next/font/google";
 import "./styles/globals.scss";
 import Head from "next/head";
+import Particles from "react-particles";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,7 +13,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html
+      className="bg-gradient-to-r from-customPurple via-customPink to-red-500"
+      lang="en"
+    >
       <Head>
         <link rel="icon" href="/public/favicon.ico" sizes="any" />
       </Head>
