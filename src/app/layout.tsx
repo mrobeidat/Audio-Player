@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./styles/globals.scss";
 import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react";
-
+import Navbar from "./components/Shared/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -21,6 +21,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/public/favicon.ico" sizes="any" />
       </Head>
       <body className={inter.className}>
+        <Navbar />
         {children}
         <Analytics />
       </body>

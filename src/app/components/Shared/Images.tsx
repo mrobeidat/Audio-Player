@@ -1,4 +1,5 @@
 const Images = {
+  Logo: require("../../../assets/logo.png").default,
   Backward: require("../../../assets/backward.png").default,
   Pause: require("../../../assets/pause.png").default,
   Play: require("../../../assets/play.png").default,

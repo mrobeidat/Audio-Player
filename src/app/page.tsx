@@ -6,7 +6,7 @@ import "aos/dist/aos.css";
 const Home: React.FC = () => {
   useEffect(() => {
     AOS.init({
-      duration: 400, 
+      duration: 400,
       easing: "ease-in",
     });
     AOS.refresh();

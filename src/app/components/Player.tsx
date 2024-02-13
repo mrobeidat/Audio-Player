@@ -3,8 +3,8 @@ import React, { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Images from "./Shared/Images"; // Importing Images for audio controls
 import Audios from "./Audio"; // Importing the audio file
-import Link from "next/link";
 import Particle from "./Shared/Particle";
+import Footer from "./Shared/Footer";
 
 interface PlayerProps {}
 
@@ -145,13 +145,22 @@ const Player: React.FC<PlayerProps> = () => {
   };
   return (
     <div className="flex flex-col gap-7 justify-center items-center">
-              <Particle />
+      <Particle />
       <div
-        className="bg-black flex h-50 w-377 rounded-lg p-3 items-center gap-1"
-        data-aos="fade-down"
-        data-aos-once="true"
+        className={`bg-black z-50 flex h-50 w-377 rounded-lg p-3 items-center gap-1 ${
+          isPlaying && "backdrop-blur-sm bg-white/30"
+        }`}
+        style={{
+          transition: "background-color 0.4s ease, backdrop-filter 0.4s ease",
+        }}
       >
-        <audio id="audio" ref={audioPlayer} src={Audios.Piano}></audio>
+        <audio
+          data-aos="fade-down"
+          data-aos-once="true"
+          id="audio"
+          ref={audioPlayer}
+          src={Audios.Piano}
+        ></audio>
 
         {/* backward button */}
         <Image
@@ -214,15 +223,15 @@ const Player: React.FC<PlayerProps> = () => {
           )}
         </button>
       </div>
-      <Link
+      <a
         data-aos="fade-up"
         data-aos-once="true"
-        style={{ backgroundColor: "#f14f68" }}
         className="text-white m-3 bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2"
         href={"/useractions"}
       >
-        View User Actions
-      </Link>
+        Go to User Actions
+      </a>
+      <Footer />
     </div>
   );
 };
