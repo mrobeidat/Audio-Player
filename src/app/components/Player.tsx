@@ -217,7 +217,7 @@ const Player: React.FC<PlayerProps> = () => {
         data-aos="fade-up"
         data-aos-once="true"
         style={{ backgroundColor: "#f14f68" }}
-        className="text-white rounded-lg p-3 hover:bg-fuchsia-400"
+        className="text-white m-3 bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2"
         href={"/useractions"}
       >
         View User Actions

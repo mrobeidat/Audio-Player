@@ -2,7 +2,6 @@ import React from "react";
 import { Inter } from "next/font/google";
 import "./styles/globals.scss";
 import Head from "next/head";
-import Particles from "react-particles";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -62,7 +62,7 @@ const UserActions: React.FC = () => {
   }
 
   return (
-    <div className="p-3">
+    <div className="p-3 !mb-4">
       <Link
         href={"/"}
         type="button"
@@ -71,7 +71,7 @@ const UserActions: React.FC = () => {
         ᐊ Back to Home Page
       </Link>
 
-      <div className="items-center justify-center h-screen grid grid-cols-3 gap-2 p-4 sm:p-32 flex-col parent">
+      <div className="items-center justify-center h-screen grid grid-cols-3 gap-2 p-4 sm:p-32 flex-col parent mb-4">
         {Actions.filter((action) => action.userAction !== "")
           .sort(
             (a, b) =>
