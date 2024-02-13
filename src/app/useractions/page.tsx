@@ -72,8 +72,12 @@ const UserActions: React.FC = () => {
       </Link>
 
       <div className="items-center justify-center h-screen grid grid-cols-3 gap-2 p-4 sm:p-32 flex-col parent">
-        {Actions.filter((action) => action.userAction !== "").map(
-          (action, index) => (
+        {Actions.filter((action) => action.userAction !== "")
+          .sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+          .map((action, index) => (
             <h2
               data-aos="fade-up"
               data-aos-easing="ease-in"
@@ -151,8 +155,7 @@ const UserActions: React.FC = () => {
                 )}
               </div>
             </h2>
-          )
-        )}
+          ))}
       </div>
     </div>
   );
