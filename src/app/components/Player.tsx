@@ -23,6 +23,7 @@ const Player: React.FC<PlayerProps> = () => {
 
     if (!audioElement || !progressElement) return;
 
+    // reset the progressBar and currentTime to 0
     const handleEnded = () => {
       setIsPlaying(false);
       setCurrentTime(0);
