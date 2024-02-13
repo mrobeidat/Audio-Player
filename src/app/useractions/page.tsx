@@ -62,7 +62,7 @@ const UserActions: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="p-3">
       <Link
         href={"/"}
         type="button"
