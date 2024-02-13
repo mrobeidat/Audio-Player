@@ -2,42 +2,48 @@
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 
-// Importing Images for audio controls
-import Images from "./Images";
-// Importing the audio file
-import Audios from "./Audio";
+import Images from "./Images"; // Importing Images for audio controls
+import Audios from "./Audio"; // Importing the audio file
 
 interface PlayerProps {}
 
 const Player: React.FC<PlayerProps> = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
-  const [duration, setduration] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
   const [currentTime, setCurrentTime] = useState<number>(0);
 
-  const audioPlayer = useRef(null); // reference to audio player
-  const progressBar = useRef(null); // reference to progress bar
-  const animationRef = useRef(null); // reference to animation
+  const audioPlayer = useRef<HTMLAudioElement | null>(null); // reference to audio player
+  const progressBar = useRef<HTMLInputElement | null>(null); // reference to progress bar
+  const animationRef = useRef<number | null>(null); // reference to animation
 
   useEffect(() => {
     const audioElement = audioPlayer.current;
+    const progressElement = progressBar.current;
 
-    // handle the behavior when audio ends
+    if (!audioElement || !progressElement) return;
+
     const handleEnded = () => {
       setIsPlaying(false);
-      setCurrentTime((audioPlayer.current.currentTime = 0)); // reset the current time
-      progressBar.current.value = 0; // reset the progressbar position
+      setCurrentTime(0);
+      progressElement.value = "0";
     };
+
     audioElement.addEventListener("ended", handleEnded);
 
-    // Convert the duration to minutes and seconds (ex: 2:10)
     const seconds = Math.floor(audioElement.duration);
-    setduration(seconds);
-    progressBar.current.max = seconds;
-  }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
+    setDuration(seconds);
+    progressElement.max = String(seconds);
+
+    return () => {
+      audioElement.removeEventListener("ended", handleEnded);
+    };
+  }, [audioPlayer, progressBar]);
 
   // To play and pause the audio player
   const togglePlayPause = () => {
+    if (!audioPlayer.current) return;
+
     const previousState = isPlaying;
     setIsPlaying(!previousState);
 
@@ -46,23 +52,21 @@ const Player: React.FC<PlayerProps> = () => {
       animationRef.current = requestAnimationFrame(updateTime);
     } else {
       audioPlayer.current.pause();
-      cancelAnimationFrame(animationRef.current);
+      cancelAnimationFrame(animationRef.current!);
     }
   };
 
   // To Mute and Unmute the audio player
   const toggleMuteUnmute = () => {
-    const audioElement = document.getElementById("audio") as HTMLAudioElement;
-    if (audioElement) {
-      audioElement.muted = !audioElement.muted;
-      setIsMuted(audioElement.muted);
-    } else {
-      console.log("No audio element found");
-    }
+    const audioElement = audioPlayer.current;
+    if (!audioElement) return;
+
+    audioElement.muted = !audioElement.muted;
+    setIsMuted(audioElement.muted);
   };
 
   // To calculate the duration
-  const calculateDuration = (secs) => {
+  const calculateDuration = (secs: number) => {
     const minutes = Math.floor(secs / 60);
     const minutesReturned = minutes < 10 ? `0${minutes}` : `${minutes}`;
     const seconds = Math.floor(secs % 60);
@@ -72,32 +76,57 @@ const Player: React.FC<PlayerProps> = () => {
 
   // To control the audio duration
   const handleChangeRange = () => {
-    audioPlayer.current.currentTime = progressBar.current.value;
+    if (!audioPlayer.current || !progressBar.current) return;
+
+    audioPlayer.current.currentTime = Number(progressBar.current.value);
     progressBar.current.style.setProperty(
-      "$seek-before-width",
-      `${(progressBar.current.value / duration) * 100}}`
+      "--seek-before-width",
+      `${(Number(progressBar.current.value) / duration) * 100}%`
     );
-    setCurrentTime(progressBar.current.value);
+    setCurrentTime(Number(progressBar.current.value));
   };
 
   // To update the current time of the audio
   const updateTime = () => {
-    progressBar.current.value = audioPlayer.current.currentTime;
+    if (!audioPlayer.current || !progressBar.current) return;
+
+    progressBar.current.value = String(audioPlayer.current.currentTime);
     progressBar.current.style.setProperty(
       "$seek-before-width",
-      `${(progressBar.current.value / duration) * 100}}`
+      `${(Number(progressBar.current.value) / duration) * 100}%`
     );
-    setCurrentTime(progressBar.current.value);
+    setCurrentTime(Number(progressBar.current.value));
     animationRef.current = requestAnimationFrame(updateTime);
+  };
+
+  // To rewind the audio 5 seconds before
+  const Backward = () => {
+    if (!progressBar.current) return;
+
+    progressBar.current.value = String(Number(progressBar.current.value) - 5);
+    handleChangeRange();
+  };
+
+  // To forward the audio 5 seconds after
+  const Forward = () => {
+    if (!progressBar.current) return;
+
+    progressBar.current.value = String(Number(progressBar.current.value) + 5);
+    handleChangeRange();
   };
   return (
     <div className="bg-black flex h-50 w-377 rounded-lg p-3 items-center gap-1">
       <audio id="audio" ref={audioPlayer} src={Audios.Piano}></audio>
+
+      {/* backward button */}
       <Image
+        onClick={Backward}
         src={Images.Backward}
         alt="backward"
-        className="object-contain min-w-7 min-h-7"
+        className="cursor-pointer object-contain min-w-7 min-h-7"
       />
+
+      {/* Toggle Play/Pause button */}
       <button onClick={togglePlayPause}>
         {isPlaying ? (
           <Image
@@ -113,15 +142,22 @@ const Player: React.FC<PlayerProps> = () => {
           />
         )}
       </button>
+
+      {/* forward button */}
       <Image
+        onClick={Forward}
         src={Images.Forward}
         alt="forward"
-        className="object-contain min-w-7 min-h-7"
+        className="cursor-pointer object-contain min-w-7 min-h-7"
       />
+
+      {/* currentTime & duration */}
       <div className="text-white">
         {calculateDuration(currentTime)}/
         {duration && !isNaN(duration) && calculateDuration(duration)}
       </div>
+
+      {/* progressBar */}
       <input
         type="range"
         className="overflow-hidden progressBar"
@@ -129,6 +165,8 @@ const Player: React.FC<PlayerProps> = () => {
         ref={progressBar}
         onChange={handleChangeRange}
       />
+
+      {/* Toggle Mute/Unmute button */}
       <button onClick={toggleMuteUnmute}>
         {isMuted ? (
           <Image src={Images.Mute} alt="unmute" />
