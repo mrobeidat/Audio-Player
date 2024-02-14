@@ -177,6 +177,7 @@ const Player: React.FC<PlayerProps> = () => {
           }}
         >
           <audio
+            preload="metadata"
             data-aos="fade-down"
             data-aos-once="true"
             id="audio"
