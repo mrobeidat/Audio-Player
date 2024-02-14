@@ -211,7 +211,7 @@ const UserActions: React.FC = () => {
               data-aos-once="true"
               data-aos-delay={`${index * 100}`}
               key={index}
-              className="backdrop-blur bg-black/30 block w-full px-4 py-2 text-lg font-medium rounded-lg text-white useraction-description "
+              className="backdrop-blur bg-black/30 block w-full px-4 py-2 text-base font-medium rounded-lg text-white useraction-description "
             >
               {/* User Actions  */}
               <div className="flex sm:flex-row gap-2 items-center">
