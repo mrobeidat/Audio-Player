@@ -1,0 +1,70 @@
+// Audio animation when playing the audio
+.muzik {
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  height: 100px;
+
+  .audio_animation {
+    width: 12px;
+    border-radius: 10px;
+    background-color: #fff;
+    animation: musicloader 1s ease-in-out infinite;
+    transition: height 0.9s ease-in-out;
+
+    &:nth-child(1) {
+      background-color: #d715d7;
+      animation-delay: 1s;
+    }
+    &:nth-child(2) {
+      background-color: #d71515;
+      animation-delay: 0.8s;
+    }
+    &:nth-child(3) {
+      background-color: #d71579;
+      animation-delay: 0.6s;
+    }
+    &:nth-child(4) {
+      background-color: #d76715;
+      animation-delay: 0.4s;
+    }
+    &:nth-child(5) {
+      background-color: #d76415;
+      animation-delay: 0.2s;
+    }
+    &:nth-child(6) {
+      background-color: #d70415;
+      animation-delay: 0.4s;
+    }
+    &:nth-child(7) {
+      background-color: #d76715;
+      animation-delay: 0.4s;
+    }
+    &:nth-child(8) {
+      background-color: #d71579;
+      animation-delay: 0.6s;
+    }
+    &:nth-child(9) {
+      background-color: #d71515;
+      animation-delay: 0.8s;
+    }
+    &:nth-child(10) {
+      background-color: #d715d7;
+      animation-delay: 1s;
+    }
+  }
+}
+
+@keyframes musicloader {
+  0% {
+    height: 4px;
+  }
+  50% {
+    height: 90px;
+  }
+  100% {
+    height: 4px;
+  }
+}
