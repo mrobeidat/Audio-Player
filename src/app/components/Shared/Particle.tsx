@@ -57,7 +57,7 @@ const Particle = () => {
           },
           particles: {
             number: {
-              value: 22,
+              value: 15,
               density: {
                 enable: true,
                 value_area: 800,

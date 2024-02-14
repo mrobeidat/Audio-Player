@@ -1,3 +1,4 @@
+//This function to formats a date string into a (time ago) format.
 
 export function formatDate(dateString: string = ""): string {
     const currentDate: Date = new Date();
@@ -10,7 +11,6 @@ export function formatDate(dateString: string = ""): string {
     const days: number = Math.floor(hours / 24);
     const months: number = Math.floor(days / 30);
     const years: number = Math.floor(days / 365);
-
 
     if (years > 1) {
         return `${years} years ago`;

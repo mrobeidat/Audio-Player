@@ -7,12 +7,12 @@
   gap: 20px;
   height: 100px;
 
+
   .audio_animation {
     width: 12px;
     border-radius: 10px;
     background-color: #fff;
     animation: musicloader 1s ease-in-out infinite;
-    transition: height 0.9s ease-in-out;
 
     &:nth-child(1) {
       background-color: #d715d7;

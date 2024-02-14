@@ -4,6 +4,7 @@ interface IUserAction extends Document {
   userAction: string;
 }
 
+// Define the schema for the UserAction document
 const userActionSchema: Schema<IUserAction> = new Schema(
   {
     userAction: String,
@@ -15,7 +16,7 @@ const userActionSchema: Schema<IUserAction> = new Schema(
 
 // Check if the model already exists
 const UserActions: Model<IUserAction> =
-  mongoose.models.UserBehaviors ||
-  mongoose.model<IUserAction>("UserBehaviors", userActionSchema);
+  mongoose.models.UserInteractions ||
+  mongoose.model<IUserAction>("UserInteractions", userActionSchema);
 
 export default UserActions;

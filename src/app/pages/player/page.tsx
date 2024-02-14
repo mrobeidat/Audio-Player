@@ -157,17 +157,10 @@ const Player: React.FC<PlayerProps> = () => {
     <div className="flex flex-col">
       {/* Audio Animation on Play */}
       {isPlaying && (
-        <div className="muzik">
-          <div className="audio_animation"></div>
-          <div className="audio_animation"></div>
-          <div className="audio_animation"></div>
-          <div className="audio_animation"></div>
-          <div className="audio_animation"></div>
-          <div className="audio_animation"></div>
-          <div className="audio_animation"></div>
-          <div className="audio_animation"></div>
-          <div className="audio_animation"></div>
-          <div className="audio_animation"></div>
+        <div className={`muzik ${isPlaying ? "muzik-playing" : ""}`}>
+          {[...Array(10)].map((_, index) => (
+            <div className="audio_animation" key={index}></div>
+          ))}
         </div>
       )}
 
@@ -256,7 +249,7 @@ const Player: React.FC<PlayerProps> = () => {
           data-aos="fade-up"
           data-aos-once="true"
           className="text-white m-3 bg-white/30 shadow-lg shadow-pink-500/50 bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2"
-          href={"/pages/useractions"}
+          href={"/pages/actions"}
         >
           Go to User Actions
         </a>
@@ -266,4 +259,4 @@ const Player: React.FC<PlayerProps> = () => {
   );
 };
 
-export { Player };
+export default Player ;
