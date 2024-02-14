@@ -176,7 +176,7 @@ const Player: React.FC<PlayerProps> = () => {
         <div
           className={`bg-black shadow-lg shadow-black/50 flex h-50 w-377 rounded-lg p-3 items-center gap-1 z-50${
             isPlaying
-              ? "backdrop-blur-sm bg-white/30 shadow-lg shadow-white/45 animate-down "
+              ? "backdrop-blur-sm bg-white/30 shadow-lg shadow-white/45 animate-down z-50"
               : " animate-up"
           }`}
           style={{
