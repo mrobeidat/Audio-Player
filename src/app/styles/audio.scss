@@ -1,12 +1,10 @@
 // Audio animation when playing the audio
 .muzik {
-  margin-bottom: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
   height: 100px;
-
 
   .audio_animation {
     width: 12px;
@@ -66,5 +64,32 @@
   }
   100% {
     height: 4px;
+  }
+}
+
+/*****************************  Player movment on play/pause *****************************/
+.animate-down {
+  animation: moveUpDown 1s forwards;
+}
+
+.animate-up {
+  animation: moveUpDownReverse 1s forwards;
+}
+
+@keyframes moveUpDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(40px);
+  }
+}
+
+@keyframes moveUpDownReverse {
+  from {
+    transform: translateY(40px);
+  }
+  to {
+    transform: translateY(0);
   }
 }

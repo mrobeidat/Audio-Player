@@ -157,7 +157,13 @@ const Player: React.FC<PlayerProps> = () => {
     <div className="flex flex-col">
       {/* Audio Animation on Play */}
       {isPlaying && (
-        <div className={`muzik ${isPlaying ? "muzik-playing" : ""}`}>
+        <div
+          data-aos="zoom-in-up"
+          data-aos-delay="300"
+          data-aos-duration="1000"
+          data-aos-easing="ease-in-out"
+          className={`muzik ${isPlaying ? "muzik-playing" : "animate-up"}`}
+        >
           {[...Array(10)].map((_, index) => (
             <div className="audio_animation" key={index}></div>
           ))}
@@ -168,15 +174,18 @@ const Player: React.FC<PlayerProps> = () => {
         {/* React Particles effects */}
         <Particle />
         <div
-          className={`bg-black shadow-lg shadow-black/50 flex h-50 w-377 rounded-lg p-3 items-center gap-1 z-50 ${
-            isPlaying &&
-            "backdrop-blur-sm bg-white/30 shadow-lg shadow-white/45"
+          className={`bg-black shadow-lg shadow-black/50 flex h-50 w-377 rounded-lg p-3 items-center gap-1 z-50${
+            isPlaying
+              ? "backdrop-blur-sm bg-white/30 shadow-lg shadow-white/45 animate-down "
+              : " animate-up"
           }`}
           style={{
-            transition: "background-color 0.4s ease, backdrop-filter 0.4s ease",
+            transition:
+              "background-color 0.4s ease, backdrop-filter 0.4s ease ",
           }}
         >
           <audio
+            className="animate-down"
             preload="metadata"
             data-aos="fade-down"
             data-aos-once="true"
@@ -190,7 +199,7 @@ const Player: React.FC<PlayerProps> = () => {
             onClick={Backward}
             src={Images.Backward}
             alt="backward"
-            className="cursor-pointer object-contain min-w-7 min-h-7"
+            className="cursor-pointer object-contain min-w-7 min-h-7 .animate-down"
             draggable="false"
           />
 
@@ -247,9 +256,9 @@ const Player: React.FC<PlayerProps> = () => {
           </button>
         </div>
         <a
-          data-aos="fade-up"
-          data-aos-once="true"
-          className="text-white m-3 bg-white/30 shadow-lg shadow-pink-500/50 bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2"
+          className={`text-white m-3 bg-white/30 shadow-lg shadow-pink-500/50 bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ${
+            isPlaying ? "animate-down" : " animate-up"
+          }`}
           href={"/pages/actions"}
         >
           Go to User Actions ᐅ
@@ -260,4 +269,4 @@ const Player: React.FC<PlayerProps> = () => {
   );
 };
 
-export default Player ;
+export default Player;
