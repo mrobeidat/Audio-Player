@@ -251,7 +251,7 @@ const Player: React.FC<PlayerProps> = () => {
           className="text-white m-3 bg-white/30 shadow-lg shadow-pink-500/50 bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2"
           href={"/pages/actions"}
         >
-          Go to User Actions
+          Go to User Actions ᐅ
         </a>
         <Footer />
       </div>
