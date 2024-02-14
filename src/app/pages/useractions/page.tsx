@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Images from "../components/Shared/Images";
+import Images from "../../components/Shared/Images";
 import Image from "next/image";
-import { formatDate } from "../../../libs/utils";
-import Particle from "../components/Shared/Particle";
-import { BeatLoader, FadeLoader, ScaleLoader } from "react-spinners";
+import { formatDate } from "../../../../libs/utils";
+import Particle from "../../components/Shared/Particle";
+import { GridLoader } from "react-spinners";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Dropdown } from "flowbite-react";
@@ -87,7 +87,7 @@ const UserActions: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <ScaleLoader color="#ffffff" />
+        <GridLoader color="#fff" size={30} />
       </div>
     );
   }
@@ -107,7 +107,7 @@ const UserActions: React.FC = () => {
 
         <Dropdown
           label="Filter Actions"
-          className="z-50 backdrop-blur-lg bg-black/30 rounded-2xl"
+          className="z-30 backdrop-blur-lg bg-black/30 rounded-2xl"
           style={{
             backgroundColor: "rgba(10, 10, 0, 0.4)",
             backdropFilter: "blur(80px)",
@@ -211,7 +211,7 @@ const UserActions: React.FC = () => {
               data-aos-once="true"
               data-aos-delay={`${index * 100}`}
               key={index}
-              className="backdrop-blur bg-black/25 block w-full px-4 py-2 text-sm font-medium text-gray-900  rounded-lg  dark:text-white useraction-description "
+              className="backdrop-blur bg-black/30 block w-full px-4 py-2 text-lg font-medium rounded-lg text-white useraction-description "
             >
               {/* User Actions  */}
               <div className="flex sm:flex-row gap-2 items-center">

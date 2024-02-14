@@ -1,10 +1,10 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import Images from "./Shared/Images"; // Importing Images for audio controls
-import Audios from "./Audio"; // Importing the audio file
-import Particle from "./Shared/Particle";
-import Footer from "./Shared/Footer";
+import Images from "../../components/Shared/Images"; // Importing Images for audio controls
+import Audios from "../../components/Audio"; // Importing the audio file
+import Particle from "../../components/Shared/Particle";
+import Footer from "../../components/Shared/Footer";
 import AOS from "aos"; // animate on scroll
 import "aos/dist/aos.css"; // animate on scroll styles
 
@@ -175,7 +175,7 @@ const Player: React.FC<PlayerProps> = () => {
         {/* React Particles effects */}
         <Particle />
         <div
-          className={`bg-black shadow-lg shadow-black/50 flex h-50 w-377 rounded-lg p-3 items-center gap-1 ${
+          className={`bg-black shadow-lg shadow-black/50 flex h-50 w-377 rounded-lg p-3 items-center gap-1 z-50 ${
             isPlaying &&
             "backdrop-blur-sm bg-white/30 shadow-lg shadow-white/45"
           }`}
@@ -256,7 +256,7 @@ const Player: React.FC<PlayerProps> = () => {
           data-aos="fade-up"
           data-aos-once="true"
           className="text-white m-3 bg-white/30 shadow-lg shadow-pink-500/50 bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2"
-          href={"/useractions"}
+          href={"/pages/useractions"}
         >
           Go to User Actions
         </a>
