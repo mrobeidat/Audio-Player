@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
     <>
       <nav className="backdrop-blur bg-white/30 z-50 fixed w-full flex items-center justify-between">
         <div className="flex items-center p-2">
-          {currentPath === "/useractions" ? (
+          {currentPath === "/pages/actions" ? (
             <a
               href="/"
               className="text-white bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5"
