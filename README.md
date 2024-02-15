@@ -1,4 +1,4 @@
-# ▶️ Audio Player App
+# 🎧 Audio Player App
 
 Welcome to the Audio Player App! This app allows you to play, audio files and see the user interactions with the audio player.
 
