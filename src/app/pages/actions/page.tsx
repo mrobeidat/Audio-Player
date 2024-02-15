@@ -91,7 +91,7 @@ const UserActions: React.FC = () => {
       </div>
     );
   }
-  // Check if there is a response from the server
+  // Check if the response is empty
   if (!actions || actions.length === 0) {
     return (
       <div className="flex items-center justify-center h-screen">

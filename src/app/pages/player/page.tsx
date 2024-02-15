@@ -82,7 +82,7 @@ const Player: React.FC<PlayerProps> = () => {
       audioPlayer.current.pause();
       cancelAnimationFrame(animationRef.current!);
     }
-    // Logging the userAction to DB
+    // Log the userAction to DB
     handleClick(isPlaying ? "Pause" : "Play");
   };
 
@@ -94,7 +94,7 @@ const Player: React.FC<PlayerProps> = () => {
     audioElement.muted = !audioElement.muted;
     setIsMuted(audioElement.muted);
 
-    // Logging the userAction to DB
+    // Log the userAction to DB
     handleClick(isMuted ? "Unmute" : "Mute");
   };
 
