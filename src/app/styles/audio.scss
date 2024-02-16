@@ -1,10 +1,11 @@
-// Audio animation when playing the audio
+// Audio animation when playing the audio 
 .muzik {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
   height: 100px;
+  z-index: 10;
 
   .audio_animation {
     width: 12px;

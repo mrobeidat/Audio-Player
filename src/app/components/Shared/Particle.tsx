@@ -16,7 +16,7 @@ const Particle = () => {
         init={particlesInit}
         options={{
           fullScreen: { enable: true },
-          fpsLimit: 120,
+          fpsLimit: 244,
           interactivity: {
             events: {
               onClick: {
@@ -31,15 +31,9 @@ const Particle = () => {
             },
             modes: {
               detect_on: "canvas",
-              grab: {
-                distance: 400,
-                line_linked: {
-                  opacity: 1,
-                },
-              },
               bubble: {
                 distance: 800,
-                size: 20,
+                size: 150,
                 duration: 2,
                 opacity: 8,
                 speed: 3,
@@ -56,64 +50,19 @@ const Particle = () => {
             },
           },
           particles: {
-            number: {
-              value: 15,
-              density: {
-                enable: true,
-                value_area: 800,
-              },
-            },
             color: {
-              value: ["#fff"],
-            },
-            shape: {
-              type: "circle",
-              stroke: {
-                width: 1,
-                color: "#fff",
+              value: ["#d715d7", "#d71515", "#d70415", "#d76715"],
+              animation: {
+                enable: true,
+                speed: 30,
               },
-              polygon: {
-                nb_sides: 5,
-              },
-              image: {
-                src: "img/github.svg",
-                width: 100,
-                height: 100,
-              },
-            },
-            opacity: {
-              value: 1.5,
-              random: true,
-              anim: {
-                enable: false,
-                speed: 3,
-                opacity_min: 0.1,
-                sync: false,
-              },
-            },
-            size: {
-              value: 3,
-              random: true,
-              anim: {
-                enable: false,
-                speed: 40,
-                size_min: 0.9,
-                sync: false,
-              },
-            },
-            line_linked: {
-              enable: true,
-              distance: 300,
-              color: "#fff",
-              opacity: 0.7,
-              width: 1.5,
             },
             move: {
               enable: true,
               speed: 2,
-              direction: "none",
-              random: false,
-              straight: false,
+              direction: "inside",
+              random: true,
+              straight: true,
               out_mode: "out",
               attract: {
                 enable: false,
@@ -121,8 +70,82 @@ const Particle = () => {
                 rotateY: 500,
               },
             },
+            number: {
+              value: 110,
+              density: {
+                enable: true,
+                area: 800,
+              },
+            },
+            opacity: {
+              value: 1,
+              animation: {
+                enable: false,
+                startValue: "max",
+                destroy: "min",
+                speed: 0.3,
+                sync: true,
+              },
+            },
+            rotate: {
+              value: {
+                min: 0,
+                max: 360,
+              },
+              direction: "random",
+              move: true,
+              animation: {
+                enable: true,
+                speed: 50,
+              },
+            },
+            tilt: {
+              direction: "random",
+              enable: true,
+              move: true,
+              value: {
+                min: 0,
+                max: 360,
+              },
+              animation: {
+                enable: true,
+                speed: 60,
+              },
+            },
+            shape: {
+              type: ["triangle", "circle", "square", "star"],
+            },
+            size: {
+              value: {
+                min: 3,
+                max: 5,
+              },
+            },
+            roll: {
+              darken: {
+                enable: true,
+                value: 30,
+              },
+              enlighten: {
+                enable: true,
+                value: 30,
+              },
+              enable: true,
+              speed: {
+                min: 15,
+                max: 25,
+              },
+            },
+            wobble: {
+              distance: 30,
+              enable: true,
+              move: true,
+              speed: {
+                min: -15,
+                max: 15,
+              },
+            },
           },
-          detectRetina: true,
         }}
       />
     </>

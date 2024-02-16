@@ -14,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html
-      className="bg-gradient-to-r from-customPurple to-red-500  via-pink-800"
+      className="bg-gradient-to-r from-slate-950 via-cyan-600 to-slate-900"
       lang="en"
     >
       <Head>
