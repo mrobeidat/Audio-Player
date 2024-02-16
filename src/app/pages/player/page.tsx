@@ -248,7 +248,7 @@ const Player: React.FC<PlayerProps> = () => {
             alt="backward"
             className="cursor-pointer object-contain min-w-2 min-h-5"
             draggable="false"
-            height={20}
+            height={26}
           />
 
           {/* Toggle Play/Pause button */}
@@ -275,7 +275,7 @@ const Player: React.FC<PlayerProps> = () => {
             alt="forward"
             className="cursor-pointer object-contain min-w-2 min-h-5"
             draggable="false"
-            height={16}
+            height={22}
           />
 
           {/* forward button */}

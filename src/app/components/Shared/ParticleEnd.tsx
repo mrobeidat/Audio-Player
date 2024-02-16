@@ -71,7 +71,7 @@ const ParticleEnd = () => {
               },
             },
             number: {
-              value: 200,
+              value: 350,
               density: {
                 enable: true,
                 area: 800,
