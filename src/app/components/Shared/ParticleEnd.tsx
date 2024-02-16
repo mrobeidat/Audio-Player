@@ -59,7 +59,7 @@ const ParticleEnd = () => {
             },
             move: {
               enable: true,
-              speed: 20,
+              speed: 15,
               direction: "inside",
               random: true,
               straight: true,
