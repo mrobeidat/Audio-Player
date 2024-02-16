@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Images from "../../components/Shared/Images"; // Importing Images for audio controls
 import Audios from "../../components/Audio"; // Importing the audio file
-import Particle from "../../components/Shared/ParticleStart";
+import ParticleStart from "../../components/Shared/ParticleStart";
 import Footer from "../../components/Shared/Footer";
 import AOS from "aos"; // animate on scroll
 import "aos/dist/aos.css"; // animate on scroll styles
@@ -212,9 +212,9 @@ const Player: React.FC<PlayerProps> = () => {
 
       <div className="flex flex-col gap-7 justify-center items-center">
         {/* React Particles effects */}
-        {isPlaying === true ? <Particle /> : <ParticleEnd />}
+        {isPlaying ? <ParticleStart /> : <ParticleEnd />}
         <div
-          className={`bg-black shadow-lg shadow-black/50 flex h-50 w-450 rounded-lg p-3 items-center gap-1 z-50${
+          className={`bg-black shadow-lg shadow-black/50 flex h-50 md:450 rounded-lg p-3 items-center gap-1 z-50${
             isPlaying
               ? "backdrop-blur-sm bg-white/30 shadow-lg shadow-white/45 animate-down z-50"
               : " animate-up"
