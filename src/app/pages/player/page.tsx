@@ -3,10 +3,11 @@ import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Images from "../../components/Shared/Images"; // Importing Images for audio controls
 import Audios from "../../components/Audio"; // Importing the audio file
-import Particle from "../../components/Shared/Particle";
+import Particle from "../../components/Shared/ParticleStart";
 import Footer from "../../components/Shared/Footer";
 import AOS from "aos"; // animate on scroll
 import "aos/dist/aos.css"; // animate on scroll styles
+import ParticleEnd from "../../components/Shared/ParticleEnd";
 
 interface PlayerProps {}
 
@@ -15,6 +16,11 @@ const Player: React.FC<PlayerProps> = () => {
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [duration, setDuration] = useState<number>(0);
   const [currentTime, setCurrentTime] = useState<number>(0);
+  const [playlist, setPlaylist] = useState<string[]>([
+    Audios.Piano,
+    Audios.Guitar,
+  ]);
+  const [currentSongIndex, setCurrentSongIndex] = useState<number>(0);
 
   const audioPlayer = useRef(null); // reference to audio player
   const progressBar = useRef(null); // reference to progress bar
@@ -55,8 +61,8 @@ const Player: React.FC<PlayerProps> = () => {
       setIsPlaying(false);
       setCurrentTime((audioPlayer.current.currentTime = 0)); // reset the current time
       progressBar.current.value = 0; // reset the progressbar position
+      playNextSong();
     };
-
     audioElement.addEventListener("ended", handleEnded);
 
     const seconds = Math.floor(audioElement.duration);
@@ -66,7 +72,7 @@ const Player: React.FC<PlayerProps> = () => {
     return () => {
       audioElement.removeEventListener("ended", handleEnded);
     };
-  }, [audioPlayer, progressBar]);
+  }, [currentSongIndex, progressBar]);
 
   // To play and pause the audio player
   const togglePlayPause = () => {
@@ -153,6 +159,40 @@ const Player: React.FC<PlayerProps> = () => {
     // Logging the userAction to DB
     handleClick("Forward");
   };
+
+  // Switch to previous song
+  const playPreviousSong = () => {
+    if (currentSongIndex > 0) {
+      setCurrentSongIndex(currentSongIndex - 1);
+      setIsPlaying(true);
+      if (audioPlayer.current) {
+        audioPlayer.current.src = playlist[currentSongIndex - 1];
+        audioPlayer.current.play();
+        audioPlayer.current.onloadedmetadata = () => {
+          setDuration(Math.floor(audioPlayer.current.duration)); // to avoid NaN in duration
+        };
+      }
+    }
+    handleClick("Prev");
+  };
+  // switch to next song
+  const playNextSong = () => {
+    let nextSongIndex = currentSongIndex + 1;
+    // If it's the last song, loop back to the first song
+    if (nextSongIndex >= playlist.length) {
+      nextSongIndex = 0;
+    }
+    setCurrentSongIndex(nextSongIndex);
+    setIsPlaying(true);
+    if (audioPlayer.current) {
+      audioPlayer.current.src = playlist[nextSongIndex];
+      audioPlayer.current.play();
+      audioPlayer.current.onloadedmetadata = () => {
+        setDuration(Math.floor(audioPlayer.current.duration)); // to avoid NaN in duration
+      };
+    }
+    handleClick("Next");
+  };
   return (
     <div className="flex flex-col">
       {/* Audio Animation on Play */}
@@ -172,9 +212,9 @@ const Player: React.FC<PlayerProps> = () => {
 
       <div className="flex flex-col gap-7 justify-center items-center">
         {/* React Particles effects */}
-        <Particle />
+        {isPlaying === true ? <Particle /> : <ParticleEnd />}
         <div
-          className={`bg-black shadow-lg shadow-black/50 flex h-50 w-377 rounded-lg p-3 items-center gap-1 z-50${
+          className={`bg-black shadow-lg shadow-black/50 flex h-50 w-450 rounded-lg p-3 items-center gap-1 z-50${
             isPlaying
               ? "backdrop-blur-sm bg-white/30 shadow-lg shadow-white/45 animate-down z-50"
               : " animate-up"
@@ -199,8 +239,16 @@ const Player: React.FC<PlayerProps> = () => {
             onClick={Backward}
             src={Images.Backward}
             alt="backward"
-            className="cursor-pointer object-contain min-w-7 min-h-7 .animate-down"
+            className="cursor-pointer object-contain min-w-7 min-h-7"
             draggable="false"
+          />
+          <Image
+            onClick={playPreviousSong}
+            src={Images.Prev}
+            alt="backward"
+            className="cursor-pointer object-contain min-w-2 min-h-5"
+            draggable="false"
+            height={20}
           />
 
           {/* Toggle Play/Pause button */}
@@ -209,18 +257,26 @@ const Player: React.FC<PlayerProps> = () => {
               <Image
                 src={Images.Pause}
                 alt="pause"
-                className="object-contain min-w-8 min-h-7"
+                className="object-contain min-w-5 min-h-5 hover:fill-black"
                 draggable="false"
               />
             ) : (
               <Image
                 src={Images.Play}
                 alt="play"
-                className="object-contain min-w-8 min-h-7"
+                className="object-contain min-w-5 min-h-5"
                 draggable="false"
               />
             )}
           </button>
+          <Image
+            onClick={playNextSong}
+            src={Images.Next}
+            alt="forward"
+            className="cursor-pointer object-contain min-w-2 min-h-5"
+            draggable="false"
+            height={16}
+          />
 
           {/* forward button */}
           <Image

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Images from "../../components/Shared/Images";
 import Image from "next/image";
 import { formatDate } from "../../../../libs/utils";
-import Particle from "../../components/Shared/Particle";
+import Particle from "../../components/Shared/ParticleStart";
 import { GridLoader } from "react-spinners";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -145,6 +145,18 @@ const UserActions: React.FC = () => {
             Pause ({PauseCount})
           </Dropdown.Item>
           <Dropdown.Item
+            onClick={() => handleFilterChange("Next")}
+            className="flex gap-2 hover:bg-black/20 rounded-3xl"
+          >
+            <Image
+              draggable="false"
+              height={22}
+              alt="Forward"
+              src={Images.NextIcon}
+            />
+            Next ({ForwardCount})
+          </Dropdown.Item>
+          <Dropdown.Item
             onClick={() => handleFilterChange("Forward")}
             className="flex gap-2 hover:bg-black/20 rounded-3xl"
           >
@@ -167,6 +179,18 @@ const UserActions: React.FC = () => {
               src={Images.BackwardIcon}
             />
             Backward ({BackwardCount})
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => handleFilterChange("Prev")}
+            className="flex gap-2 hover:bg-black/20 rounded-3xl"
+          >
+            <Image
+              draggable="false"
+              height={22}
+              alt="Forward"
+              src={Images.PrevIcon}
+            />
+            Previous ({ForwardCount})
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => handleFilterChange("Mute")}
@@ -260,6 +284,32 @@ const UserActions: React.FC = () => {
                       src={Images.BackwardIcon}
                     />
                     <p>{`Audio Backwarded • ${formatDate(
+                      action.createdAt
+                    )}`}</p>
+                  </div>
+                )}
+                {action.userAction === "Next" && (
+                  <div className="gap-2 flex items-center">
+                    <Image
+                      draggable="false"
+                      height={22}
+                      alt="Backward"
+                      src={Images.NextIcon}
+                    />
+                    <p>{`Audio Skipped Forward • ${formatDate(
+                      action.createdAt
+                    )}`}</p>
+                  </div>
+                )}
+                {action.userAction === "Prev" && (
+                  <div className="gap-2 flex items-center">
+                    <Image
+                      draggable="false"
+                      height={22}
+                      alt="Backward"
+                      src={Images.PrevIcon}
+                    />
+                    <p>{`Audio Skipped Backward • ${formatDate(
                       action.createdAt
                     )}`}</p>
                   </div>

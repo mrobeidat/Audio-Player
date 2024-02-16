@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       width: {
-        377: "377px",
+        450: "450px",
       },
       colors: {
         customPurple: "rgba(201, 37, 107, 1)",
