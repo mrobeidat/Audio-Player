@@ -1,18 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap");
 
-.music-title {
-  font-family: "Libre Baskerville", serif;
+.poster {
+  box-shadow: rgba(0, 0, 0, 0.683) 0px 22px 70px 4px;
+  .music-title {
+    font-family: "Libre Baskerville", serif;
+    text-shadow: rgb(0, 221, 255) 1px 0 10px;
+  }
 }
-.poster{
-  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-}
+
 .progressBar {
   $bar-bg: #ffffff;
   $seek-before-width: 0;
   $seek-before-color: #f14f6759;
   $knob: #f14f68;
   $selectedknob: #cb3b51;
-  
 
   appearance: none;
   background: $bar-bg;

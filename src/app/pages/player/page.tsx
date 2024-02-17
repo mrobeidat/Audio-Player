@@ -216,7 +216,7 @@ const Player: React.FC<PlayerProps> = () => {
       setTextMove((prevTextMove) =>
         prevTextMove >= 160 ? -160 : prevTextMove + 1
       );
-    }, 20);
+    }, 37);
 
     const loadingInterval = setTimeout(() => {
       setLoading(false);
@@ -254,28 +254,34 @@ const Player: React.FC<PlayerProps> = () => {
         </div>
       )}
 
-      {/* Song Title and Poster */}
       {isPlaying && (
         <div
           data-aos="fade-up"
           data-aos-duration="1800"
           data-aos-easing="ease-in"
           data-aos-once="true"
-          className="self-center p-3 mt-5 rounded-3xl text-white backdrop-blur-xl flex flex-col items-center bg-white/30 poster shadow-white z-50 overflow-hidden"
+          className="self-center p-3 mt-5 rounded-2xl text-white backdrop-blur-lg flex flex-col items-center bg-black/40 poster shadow-white z-50 overflow-hidden"
         >
-          <p
-            style={{ transform: `translateX(${TextMove}%)` }}
-            className="text-center py-1 mb-2 music-title"
-          >
-            {AudioList[currentSongIndex]?.title}
-          </p>
+          {/* Duration line */}
+          <div
+            className="absolute left-1.5 bottom-0 h-1 bg-gradient-to-r from-red-500 via-pink-600 to-rose-900 transition-all duration-1000"
+            style={{ width: `${(currentTime / duration) * 100}%` }}
+          ></div>
+
+          {/* Song Title and Poster */}
           <Image
-            className="max-h-64 object-cover rounded-2xl max-w-80"
+            className="max-h-64 object-cover rounded-xl max-w-80"
             src={AudioList[currentSongIndex]?.img?.src || ""}
             alt={AudioList[currentSongIndex]?.title}
             height={AudioList[currentSongIndex]?.img?.height || ""}
             width={AudioList[currentSongIndex]?.img?.width || ""}
           />
+          <p
+            style={{ transform: `translateX(${TextMove}%)` }}
+            className="text-center py-1 mt-2 music-title"
+          >
+            {AudioList[currentSongIndex]?.title}
+          </p>
         </div>
       )}
 
@@ -285,7 +291,7 @@ const Player: React.FC<PlayerProps> = () => {
         <div
           className={`bg-black shadow-lg shadow-black/50 flex h-50 rounded-lg p-3 items-center gap-1 ${
             isPlaying
-              ? "backdrop-blur-md bg-white/30 poster shadow-white/60 animate-down"
+              ? "backdrop-blur-md bg-black/50 poster shadow-white/60 animate-down"
               : "animate-up"
           }`}
           style={{
@@ -302,7 +308,6 @@ const Player: React.FC<PlayerProps> = () => {
             src={AudioList[currentSongIndex]?.src}
             autoPlay={isPlaying ? true : false}
           ></audio>
-
           {/* Buttons */}
           {[
             {
