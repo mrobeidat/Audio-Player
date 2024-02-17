@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className="backdrop-blur bg-white/30 z-30 fixed w-full flex items-center justify-between">
+      <nav className="backdrop-blur bg-black/30 z-30 fixed w-full flex items-center justify-between">
         <div className="flex items-center p-2">
           {currentPath === "/pages/actions" ? (
             <a
