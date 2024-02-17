@@ -51,15 +51,15 @@ const Particle = () => {
           },
           particles: {
             color: {
-              value: ["#d715d7", "#d71515", "#d70415", "#d76715"],
+              value: ["#d71515", "#d715d7", "#d71579", "#d71515", "#fff"],
               animation: {
                 enable: true,
-                speed: 30,
+                speed: 200,
               },
             },
             move: {
               enable: true,
-              speed: 2,
+              speed: 5,
               direction: "outside",
               random: true,
               straight: true,
@@ -71,7 +71,7 @@ const Particle = () => {
               },
             },
             number: {
-              value: 190,
+              value: 250,
               density: {
                 enable: true,
                 area: 800,

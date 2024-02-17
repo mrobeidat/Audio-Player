@@ -95,7 +95,7 @@ const UserActions: React.FC = () => {
   if (!actions || actions.length === 0) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p>No user actions available.</p>
+        <p className="text-white">No user actions available.</p>
       </div>
     );
   }

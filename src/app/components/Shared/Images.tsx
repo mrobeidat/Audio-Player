@@ -18,6 +18,16 @@ const Images = {
   BackwardIcon: require("../../../assets/backward-icon.png").default,
   MuteIcon: require("../../../assets/mute-icon.png").default,
   UnmuteIcon: require("../../../assets/unmute-icon.png").default,
+
+  // For button icons
+  NextArrow: require("../../../assets/arrow.png").default,
+  BackArrow: require("../../../assets/back.png").default,
+
+  // For Songs Posters
+  Poster1: require("../../../assets/poster1.png").default,
+  Poster2: require("../../../assets/poster2.png").default,
+  Poster3: require("../../../assets/poster3.png").default,
+
 };
 
 export default Images;

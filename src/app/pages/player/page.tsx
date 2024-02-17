@@ -17,14 +17,37 @@ const Player: React.FC<PlayerProps> = () => {
   const [duration, setDuration] = useState<number>(0);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [playlist, setPlaylist] = useState<string[]>([
-    Audios.Piano,
-    Audios.Guitar,
+    Audios.Song1,
+    Audios.Song2,
+    Audios.Song3,
   ]);
   const [currentSongIndex, setCurrentSongIndex] = useState<number>(0);
+  const [TextMove, setTextMove] = useState(0);
 
   const audioPlayer = useRef(null); // reference to audio player
   const progressBar = useRef(null); // reference to progress bar
   const animationRef = useRef(null); // reference to animation
+
+  // To display the Song name and Poster
+  const AudioList = [
+    {
+      title: "My Love - Roman Dudchyk",
+      src: Audios.Song1,
+      img: Images.Poster1,
+    },
+    {
+      title: "Reverie - AShamaluevMusic",
+      src: Audios.Song1,
+      img: Images.Poster3,
+    },
+    {
+      title: "Reverie - AShamaluevMusic",
+      src: Audios.Song3,
+      img: Images.Poster2,
+    },
+  ];
+  const currentSongTitle = AudioList[currentSongIndex].title;
+  const currentSongImage = AudioList[currentSongIndex].img;
 
   // To handle the user interaction with the audio player
   const handleClick = async (action: string) => {
@@ -42,6 +65,7 @@ const Player: React.FC<PlayerProps> = () => {
     }
   };
 
+  // Initializing AOS animations to set up animations on component mount
   useEffect(() => {
     AOS.init({
       duration: 400,
@@ -50,19 +74,20 @@ const Player: React.FC<PlayerProps> = () => {
     AOS.refresh();
   }, []);
 
+  // reset the progressBar and currentTime to 0
+  const handleEnded = () => {
+    setIsPlaying(false);
+    setCurrentTime((audioPlayer.current.currentTime = 0)); // reset the current time
+    progressBar.current.value = 0; // reset the progressbar position
+    playNextSong();
+  };
+
   useEffect(() => {
     const audioElement = audioPlayer.current;
     const progressElement = progressBar.current;
 
     if (!audioElement || !progressElement) return;
 
-    // reset the progressBar and currentTime to 0
-    const handleEnded = () => {
-      setIsPlaying(false);
-      setCurrentTime((audioPlayer.current.currentTime = 0)); // reset the current time
-      progressBar.current.value = 0; // reset the progressbar position
-      playNextSong();
-    };
     audioElement.addEventListener("ended", handleEnded);
 
     const seconds = Math.floor(audioElement.duration);
@@ -123,6 +148,7 @@ const Player: React.FC<PlayerProps> = () => {
       `${(Number(progressBar.current.value) / duration) * 100}%`
     );
     setCurrentTime(Number(progressBar.current.value));
+    progressBar.current.max = String(duration);
   };
 
   // To update the current time of the audio
@@ -162,16 +188,18 @@ const Player: React.FC<PlayerProps> = () => {
 
   // Switch to previous song
   const playPreviousSong = () => {
-    if (currentSongIndex > 0) {
-      setCurrentSongIndex(currentSongIndex - 1);
-      setIsPlaying(true);
-      if (audioPlayer.current) {
-        audioPlayer.current.src = playlist[currentSongIndex - 1];
-        audioPlayer.current.play();
-        audioPlayer.current.onloadedmetadata = () => {
-          setDuration(Math.floor(audioPlayer.current.duration)); // to avoid NaN in duration
-        };
-      }
+    let newIndex = currentSongIndex - 1;
+    if (newIndex < 0) {
+      newIndex = playlist.length - 1;
+    }
+    setCurrentSongIndex(newIndex);
+    setIsPlaying(true);
+    if (audioPlayer.current) {
+      audioPlayer.current.src = playlist[newIndex];
+      audioPlayer.current.play();
+      audioPlayer.current.onloadedmetadata = () => {
+        setDuration(Math.floor(audioPlayer.current.duration)); // to avoid NaN in duration
+      };
     }
     handleClick("Prev");
   };
@@ -193,6 +221,16 @@ const Player: React.FC<PlayerProps> = () => {
     }
     handleClick("Next");
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTextMove((prevTextMove) =>
+        prevTextMove >= 100 ? -100 : prevTextMove + 1
+      );
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="flex flex-col">
       {/* Audio Animation on Play */}
@@ -200,7 +238,7 @@ const Player: React.FC<PlayerProps> = () => {
         <div
           data-aos="zoom-in-up"
           data-aos-delay="300"
-          data-aos-duration="1000"
+          data-aos-duration="2300"
           data-aos-easing="ease-in-out"
           className={`muzik ${isPlaying ? "muzik-playing" : "animate-up"}`}
         >
@@ -209,19 +247,41 @@ const Player: React.FC<PlayerProps> = () => {
           ))}
         </div>
       )}
-
-      <div className="flex flex-col gap-7 justify-center items-center">
+      {isPlaying && (
+        <div
+          data-aos="fade-up"
+          data-aos-delay=""
+          data-aos-duration="1000"
+          data-aos-easing="ease-in"
+          className="self-center p-3 mt-12 rounded-3xl text-white backdrop-blur-xl flex flex-col items-center bg-white/30 poster shadow-white z-50 overflow-hidden"
+        >
+          <p
+            style={{ transform: `translateX(${TextMove}%)` }}
+            className="text-center py-1 mb-3 music-title"
+          >
+            {currentSongTitle}
+          </p>
+          <Image
+            className="max-h-64 object-cover  rounded-2xl max-w-80"
+            src={currentSongImage ? currentSongImage.src : ""}
+            alt={currentSongTitle}
+            height={currentSongImage ? currentSongImage.height : ""}
+            width={currentSongImage ? currentSongImage.width : ""}
+          />
+        </div>
+      )}
+      <div className="flex flex-col gap-1 justify-center items-center">
         {/* React Particles effects */}
         {isPlaying ? <ParticleStart /> : <ParticleEnd />}
         <div
-          className={`bg-black shadow-lg shadow-black/50 flex h-50 md:450 rounded-lg p-3 items-center gap-1 z-50${
+          className={`bg-black shadow-lg shadow-black/50 flex h-50 rounded-lg p-3 items-center gap-1 ${
             isPlaying
-              ? "backdrop-blur-sm bg-white/30 shadow-lg shadow-white/45 animate-down z-50"
+              ? "backdrop-blur-md bg-white/30 poster shadow-white/60 animate-down"
               : " animate-up"
           }`}
           style={{
             transition:
-              "background-color 0.4s ease, backdrop-filter 0.4s ease ",
+              "background-color 0.5s ease, backdrop-filter 0.5s ease ",
           }}
         >
           <audio
@@ -231,16 +291,16 @@ const Player: React.FC<PlayerProps> = () => {
             data-aos-once="true"
             id="audio"
             ref={audioPlayer}
-            src={Audios.Piano}
+            src={AudioList[currentSongIndex].src}
           ></audio>
-
           {/* backward button */}
           <Image
             onClick={Backward}
             src={Images.Backward}
             alt="backward"
-            className="cursor-pointer object-contain min-w-7 min-h-7"
+            className="cursor-pointer object-contain min-w-5 min-h-5"
             draggable="false"
+            height={20}
           />
           <Image
             onClick={playPreviousSong}
@@ -248,7 +308,7 @@ const Player: React.FC<PlayerProps> = () => {
             alt="backward"
             className="cursor-pointer object-contain min-w-2 min-h-5"
             draggable="false"
-            height={26}
+            height={22}
           />
 
           {/* Toggle Play/Pause button */}
@@ -259,6 +319,7 @@ const Player: React.FC<PlayerProps> = () => {
                 alt="pause"
                 className="object-contain min-w-5 min-h-5 hover:fill-black"
                 draggable="false"
+                height={33}
               />
             ) : (
               <Image
@@ -266,6 +327,7 @@ const Player: React.FC<PlayerProps> = () => {
                 alt="play"
                 className="object-contain min-w-5 min-h-5"
                 draggable="false"
+                height={33}
               />
             )}
           </button>
@@ -275,7 +337,7 @@ const Player: React.FC<PlayerProps> = () => {
             alt="forward"
             className="cursor-pointer object-contain min-w-2 min-h-5"
             draggable="false"
-            height={22}
+            height={18}
           />
 
           {/* forward button */}
@@ -283,8 +345,9 @@ const Player: React.FC<PlayerProps> = () => {
             onClick={Forward}
             src={Images.Forward}
             alt="forward"
-            className="cursor-pointer object-contain min-w-7 min-h-7"
+            className="cursor-pointer object-contain min-w-5 min-h-5"
             draggable="false"
+            height={20}
           />
 
           {/* currentTime & duration */}
@@ -305,19 +368,30 @@ const Player: React.FC<PlayerProps> = () => {
           {/* Toggle Mute/Unmute button */}
           <button onClick={toggleMuteUnmute}>
             {isMuted ? (
-              <Image src={Images.Mute} alt="unmute" draggable="false" />
+              <Image
+                src={Images.Mute}
+                alt="unmute"
+                draggable="false"
+                height={18}
+              />
             ) : (
-              <Image src={Images.Unmute} alt="mute" draggable="false" />
+              <Image
+                src={Images.Unmute}
+                alt="mute"
+                draggable="false"
+                height={18}
+              />
             )}
           </button>
         </div>
         <a
-          className={`text-white m-3 bg-white/30 shadow-lg shadow-pink-500/50 bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ${
+          className={`text-white flex gap-2 m-3 bg-white/30 shadow-lg shadow-pink-500/50 bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ${
             isPlaying ? "animate-down" : " animate-up"
           }`}
           href={"/pages/actions"}
         >
-          Go to User Actions ᐅ
+          <p>View User Actions</p>
+          <Image height={20} width={20} alt="arrow" src={Images.NextArrow} />
         </a>
         <Footer />
       </div>

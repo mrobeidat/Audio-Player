@@ -54,7 +54,7 @@ const ParticleEnd = () => {
               value: ["#d715d7", "#d71515", "#d70415", "#d76715"],
               animation: {
                 enable: true,
-                speed: 30,
+                speed: 70,
               },
             },
             move: {
