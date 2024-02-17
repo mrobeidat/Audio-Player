@@ -214,7 +214,7 @@ const Player: React.FC<PlayerProps> = () => {
   useEffect(() => {
     const textInterval = setInterval(() => {
       setTextMove((prevTextMove) =>
-        prevTextMove >= 130 ? -130 : prevTextMove + 1
+        prevTextMove >= 160 ? -160 : prevTextMove + 1
       );
     }, 20);
 
@@ -261,7 +261,6 @@ const Player: React.FC<PlayerProps> = () => {
           data-aos-duration="1800"
           data-aos-easing="ease-in"
           data-aos-once="true"
-
           className="self-center p-3 mt-5 rounded-3xl text-white backdrop-blur-xl flex flex-col items-center bg-white/30 poster shadow-white z-50 overflow-hidden"
         >
           <p
