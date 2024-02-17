@@ -222,7 +222,7 @@ const Player: React.FC<PlayerProps> = () => {
     <div className="flex flex-col">
       {/* Animation */}
       {isPlaying && (
-        <div className={`muzik muzik-playing`}>
+        <div className={`muzik muzik-playing `}>
           {[...Array(10)].map((_, index) => (
             <div className="audio_animation" key={index}></div>
           ))}
@@ -231,10 +231,10 @@ const Player: React.FC<PlayerProps> = () => {
 
       {/* Song Title and Poster */}
       {isPlaying && (
-        <div className="self-center p-3 mt-12 rounded-3xl text-white backdrop-blur-xl flex flex-col items-center bg-white/30 poster shadow-white z-50 overflow-hidden">
+        <div className="self-center p-3 mt-5 rounded-3xl text-white backdrop-blur-xl flex flex-col items-center bg-white/30 poster shadow-white z-50 overflow-hidden">
           <p
             style={{ transform: `translateX(${TextMove}%)` }}
-            className="text-center py-1 mb-3 music-title"
+            className="text-center py-1 mb-2 music-title"
           >
             {AudioList[currentSongIndex]?.title}
           </p>
