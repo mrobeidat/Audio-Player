@@ -277,13 +277,13 @@ const Player: React.FC<PlayerProps> = () => {
               onClick: () => adjustPlaybackTime(-5),
               src: Images.Backward,
               alt: "backward",
-              height: 22,
+              height: 20,
             },
             {
               onClick: playPreviousSong,
               src: Images.Prev,
               alt: "backward",
-              height: 22,
+              height: 24,
             },
             {
               onClick: togglePlayPause,
