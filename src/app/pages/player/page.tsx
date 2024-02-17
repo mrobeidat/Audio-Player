@@ -338,7 +338,7 @@ const Player: React.FC<PlayerProps> = () => {
           {/* Current time, duration, and progress bar */}
           <div className="text-white">
             {calculateDuration(currentTime)}/
-            {!isNaN(duration) && calculateDuration(duration)}
+            {duration && !isNaN(duration) && calculateDuration(duration)}
           </div>
           <input
             type="range"
