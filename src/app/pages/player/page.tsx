@@ -36,18 +36,16 @@ const Player: React.FC<PlayerProps> = () => {
       img: Images.Poster1,
     },
     {
-      title: "Reverie - AShamaluevMusic",
-      src: Audios.Song1,
-      img: Images.Poster3,
-    },
-    {
-      title: "Reverie - AShamaluevMusic",
-      src: Audios.Song3,
+      title: "Pleasure - AShamaluevMusic",
+      src: Audios.Song2,
       img: Images.Poster2,
     },
+    {
+      title: "Reverie  - AShamaluevMusic",
+      src: Audios.Song3,
+      img: Images.Poster3,
+    },
   ];
-  const currentSongTitle = AudioList[currentSongIndex].title;
-  const currentSongImage = AudioList[currentSongIndex].img;
 
   // To handle the user interaction with the audio player
   const handleClick = async (action: string) => {
@@ -164,26 +162,15 @@ const Player: React.FC<PlayerProps> = () => {
     animationRef.current = requestAnimationFrame(updateTime);
   };
 
-  // To rewind the audio 5 seconds before
-  const Backward = () => {
+  // Rewind or forward the audio by a specified number of seconds
+  const adjustPlaybackTime = (seconds: number) => {
     if (!progressBar.current) return;
 
-    progressBar.current.value = String(Number(progressBar.current.value) - 5);
+    progressBar.current.value = String(
+      Number(progressBar.current.value) + seconds
+    );
     handleChangeRange();
-
-    // Logging the userAction to DB
-    handleClick("Backward");
-  };
-
-  // To forward the audio 5 seconds after
-  const Forward = () => {
-    if (!progressBar.current) return;
-
-    progressBar.current.value = String(Number(progressBar.current.value) + 5);
-    handleChangeRange();
-
-    // Logging the userAction to DB
-    handleClick("Forward");
+    handleClick(seconds > 0 ? "Forward" : "Backward");
   };
 
   // Switch to previous song
@@ -233,45 +220,36 @@ const Player: React.FC<PlayerProps> = () => {
 
   return (
     <div className="flex flex-col">
-      {/* Audio Animation on Play */}
+      {/* Animation */}
       {isPlaying && (
-        <div
-          data-aos="zoom-in-up"
-          data-aos-delay="300"
-          data-aos-duration="2300"
-          data-aos-easing="ease-in-out"
-          className={`muzik ${isPlaying ? "muzik-playing" : "animate-up"}`}
-        >
+        <div className={`muzik muzik-playing`}>
           {[...Array(10)].map((_, index) => (
             <div className="audio_animation" key={index}></div>
           ))}
         </div>
       )}
+
+      {/* Song Title and Poster */}
       {isPlaying && (
-        <div
-          data-aos="fade-up"
-          data-aos-delay=""
-          data-aos-duration="1000"
-          data-aos-easing="ease-in"
-          className="self-center p-3 mt-12 rounded-3xl text-white backdrop-blur-xl flex flex-col items-center bg-white/30 poster shadow-white z-50 overflow-hidden"
-        >
+        <div className="self-center p-3 mt-12 rounded-3xl text-white backdrop-blur-xl flex flex-col items-center bg-white/30 poster shadow-white z-50 overflow-hidden">
           <p
             style={{ transform: `translateX(${TextMove}%)` }}
             className="text-center py-1 mb-3 music-title"
           >
-            {currentSongTitle}
+            {AudioList[currentSongIndex]?.title}
           </p>
           <Image
-            className="max-h-64 object-cover  rounded-2xl max-w-80"
-            src={currentSongImage ? currentSongImage.src : ""}
-            alt={currentSongTitle}
-            height={currentSongImage ? currentSongImage.height : ""}
-            width={currentSongImage ? currentSongImage.width : ""}
+            className="max-h-64 object-cover rounded-2xl max-w-80"
+            src={AudioList[currentSongIndex]?.img?.src || ""}
+            alt={AudioList[currentSongIndex]?.title}
+            height={AudioList[currentSongIndex]?.img?.height || ""}
+            width={AudioList[currentSongIndex]?.img?.width || ""}
           />
         </div>
       )}
+
+      {/* Audio Controls */}
       <div className="flex flex-col gap-1 justify-center items-center">
-        {/* React Particles effects */}
         {isPlaying ? <ParticleStart /> : <ParticleEnd />}
         <div
           className={`bg-black shadow-lg shadow-black/50 flex h-50 rounded-lg p-3 items-center gap-1 ${
@@ -284,79 +262,64 @@ const Player: React.FC<PlayerProps> = () => {
               "background-color 0.5s ease, backdrop-filter 0.5s ease ",
           }}
         >
+          {/* Audio element */}
           <audio
             className="animate-down"
             preload="metadata"
-            data-aos="fade-down"
-            data-aos-once="true"
             id="audio"
             ref={audioPlayer}
-            src={AudioList[currentSongIndex].src}
+            src={AudioList[currentSongIndex]?.src}
           ></audio>
-          {/* backward button */}
-          <Image
-            onClick={Backward}
-            src={Images.Backward}
-            alt="backward"
-            className="cursor-pointer object-contain min-w-5 min-h-5"
-            draggable="false"
-            height={20}
-          />
-          <Image
-            onClick={playPreviousSong}
-            src={Images.Prev}
-            alt="backward"
-            className="cursor-pointer object-contain min-w-2 min-h-5"
-            draggable="false"
-            height={22}
-          />
 
-          {/* Toggle Play/Pause button */}
-          <button onClick={togglePlayPause}>
-            {isPlaying ? (
+          {/* Buttons */}
+          {[
+            {
+              onClick: () => adjustPlaybackTime(-5),
+              src: Images.Backward,
+              alt: "backward",
+              height: 20,
+            },
+            {
+              onClick: playPreviousSong,
+              src: Images.Prev,
+              alt: "backward",
+              height: 22,
+            },
+            {
+              onClick: togglePlayPause,
+              src: isPlaying ? Images.Pause : Images.Play,
+              alt: isPlaying ? "pause" : "play",
+              height: 33,
+            },
+            {
+              onClick: playNextSong,
+              src: Images.Next,
+              alt: "forward",
+              height: 18,
+            },
+            {
+              onClick: () => adjustPlaybackTime(5),
+              src: Images.Forward,
+              alt: "forward",
+              height: 20,
+            },
+          ].map((button, index) => (
+            <button key={index} onClick={button.onClick}>
               <Image
-                src={Images.Pause}
-                alt="pause"
-                className="object-contain min-w-5 min-h-5 hover:fill-black"
+                src={button.src}
+                alt={button.alt}
+                className="cursor-pointer object-contain min-w-5 min-h-5 hover:fill-black"
                 draggable="false"
-                height={33}
+                height={button.height}
               />
-            ) : (
-              <Image
-                src={Images.Play}
-                alt="play"
-                className="object-contain min-w-5 min-h-5"
-                draggable="false"
-                height={33}
-              />
-            )}
-          </button>
-          <Image
-            onClick={playNextSong}
-            src={Images.Next}
-            alt="forward"
-            className="cursor-pointer object-contain min-w-2 min-h-5"
-            draggable="false"
-            height={18}
-          />
+            </button>
+          ))}
 
-          {/* forward button */}
-          <Image
-            onClick={Forward}
-            src={Images.Forward}
-            alt="forward"
-            className="cursor-pointer object-contain min-w-5 min-h-5"
-            draggable="false"
-            height={20}
-          />
-
-          {/* currentTime & duration */}
+          {/* Current time, duration, and progress bar */}
           <div className="text-white">
             {calculateDuration(currentTime)}/
-            {duration && !isNaN(duration) && calculateDuration(duration)}
+            {!isNaN(duration) && calculateDuration(duration)}
           </div>
-
-          {/* progressBar */}
           <input
             type="range"
             className="overflow-hidden progressBar"
@@ -367,23 +330,16 @@ const Player: React.FC<PlayerProps> = () => {
 
           {/* Toggle Mute/Unmute button */}
           <button onClick={toggleMuteUnmute}>
-            {isMuted ? (
-              <Image
-                src={Images.Mute}
-                alt="unmute"
-                draggable="false"
-                height={18}
-              />
-            ) : (
-              <Image
-                src={Images.Unmute}
-                alt="mute"
-                draggable="false"
-                height={18}
-              />
-            )}
+            <Image
+              src={isMuted ? Images.Mute : Images.Unmute}
+              alt={isMuted ? "unmute" : "mute"}
+              draggable="false"
+              height={18}
+            />
           </button>
         </div>
+
+        {/* View User Actions */}
         <a
           className={`text-white flex gap-2 m-3 bg-white/30 shadow-lg shadow-pink-500/50 bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ${
             isPlaying ? "animate-down" : " animate-up"
@@ -393,6 +349,8 @@ const Player: React.FC<PlayerProps> = () => {
           <p>View User Actions</p>
           <Image height={20} width={20} alt="arrow" src={Images.NextArrow} />
         </a>
+
+        {/* Footer */}
         <Footer />
       </div>
     </div>

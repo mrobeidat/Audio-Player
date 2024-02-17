@@ -120,102 +120,30 @@ const UserActions: React.FC = () => {
           >
             All ({AllActionsCount})
           </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() => handleFilterChange("Play")}
-            className="flex gap-2 hover:bg-black/20 rounded-3xl"
-          >
-            <Image
-              draggable="false"
-              height={22}
-              alt="Pause"
-              src={Images.PlayIcon}
-            />
-            Play ({PlayCount})
-          </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() => handleFilterChange("Pause")}
-            className="flex gap-2 hover:bg-black/20 rounded-3xl"
-          >
-            <Image
-              draggable="false"
-              height={22}
-              alt="Pause"
-              src={Images.PauseIcon}
-            />
-            Pause ({PauseCount})
-          </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() => handleFilterChange("Next")}
-            className="flex gap-2 hover:bg-black/20 rounded-3xl"
-          >
-            <Image
-              draggable="false"
-              height={22}
-              alt="Forward"
-              src={Images.NextIcon}
-            />
-            Next ({ForwardCount})
-          </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() => handleFilterChange("Forward")}
-            className="flex gap-2 hover:bg-black/20 rounded-3xl"
-          >
-            <Image
-              draggable="false"
-              height={22}
-              alt="Forward"
-              src={Images.ForwardIcon}
-            />
-            Forward ({ForwardCount})
-          </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() => handleFilterChange("Backward")}
-            className="flex gap-2 hover:bg-black/20 rounded-3xl"
-          >
-            <Image
-              draggable="false"
-              height={22}
-              alt="Backward"
-              src={Images.BackwardIcon}
-            />
-            Backward ({BackwardCount})
-          </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() => handleFilterChange("Prev")}
-            className="flex gap-2 hover:bg-black/20 rounded-3xl"
-          >
-            <Image
-              draggable="false"
-              height={22}
-              alt="Forward"
-              src={Images.PrevIcon}
-            />
-            Previous ({ForwardCount})
-          </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() => handleFilterChange("Mute")}
-            className="flex gap-2 hover:bg-black/20 rounded-3xl"
-          >
-            <Image
-              draggable="false"
-              height={22}
-              alt="Mute"
-              src={Images.MuteIcon}
-            />
-            Mute ({MuteCount})
-          </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() => handleFilterChange("Unmute")}
-            className="flex gap-2 hover:bg-black/20 rounded-3xl"
-          >
-            <Image
-              draggable="false"
-              height={22}
-              alt="Unmute"
-              src={Images.UnmuteIcon}
-            />
-            Unmute ({UnmuteCount})
-          </Dropdown.Item>
+          {[
+            { action: "Play", count: PlayCount },
+            { action: "Pause", count: PauseCount },
+            { action: "Next", count: ForwardCount },
+            { action: "Forward", count: ForwardCount },
+            { action: "Backward", count: BackwardCount },
+            { action: "Prev", count: ForwardCount },
+            { action: "Mute", count: MuteCount },
+            { action: "Unmute", count: UnmuteCount },
+          ].map(({ action, count }) => (
+            <Dropdown.Item
+              key={action}
+              onClick={() => handleFilterChange(action)}
+              className="flex gap-2 hover:bg-black/20 rounded-3xl"
+            >
+              <Image
+                draggable="false"
+                height={22}
+                alt={action}
+                src={Images[`${action}Icon`]}
+              />
+              {`${action.charAt(0).toUpperCase()}${action.slice(1)} (${count})`}
+            </Dropdown.Item>
+          ))}
         </Dropdown>
       </div>
       <div className="items-center justify-center grid grid-cols-3 gap-2 p-4 flex-col parent mt-9">
@@ -239,101 +167,17 @@ const UserActions: React.FC = () => {
             >
               {/* User Actions  */}
               <div className="flex sm:flex-row gap-2 items-center">
-                {action.userAction === "Play" && (
-                  <div
-                    className="gap-2 flex items-center"
-                    data-tooltip-target="tooltip-default"
-                  >
-                    <Image
-                      draggable="false"
-                      height={22}
-                      alt="Play"
-                      src={Images.PlayIcon}
-                    />
-                    <p>{`Audio Played • ${formatDate(action.createdAt)}`}</p>
-                  </div>
-                )}
-                {action.userAction === "Pause" && (
+                {action.userAction && (
                   <div className="gap-2 flex items-center">
                     <Image
                       draggable="false"
                       height={22}
-                      alt="Pause"
-                      src={Images.PauseIcon}
+                      alt={action.userAction}
+                      src={Images[`${action.userAction}Icon`]}
                     />
-                    <p>{`Audio Paused • ${formatDate(action.createdAt)}`}</p>
-                  </div>
-                )}
-                {action.userAction === "Forward" && (
-                  <div className="gap-2 flex items-center">
-                    <Image
-                      draggable="false"
-                      height={22}
-                      alt="Forward"
-                      src={Images.ForwardIcon}
-                    />
-                    <p>{`Audio Forwarded • ${formatDate(action.createdAt)}`}</p>
-                  </div>
-                )}
-                {action.userAction === "Backward" && (
-                  <div className="gap-2 flex items-center">
-                    <Image
-                      draggable="false"
-                      height={22}
-                      alt="Backward"
-                      src={Images.BackwardIcon}
-                    />
-                    <p>{`Audio Backwarded • ${formatDate(
+                    <p>{`Audio ${action.userAction}d • ${formatDate(
                       action.createdAt
                     )}`}</p>
-                  </div>
-                )}
-                {action.userAction === "Next" && (
-                  <div className="gap-2 flex items-center">
-                    <Image
-                      draggable="false"
-                      height={22}
-                      alt="Backward"
-                      src={Images.NextIcon}
-                    />
-                    <p>{`Audio Skipped Forward • ${formatDate(
-                      action.createdAt
-                    )}`}</p>
-                  </div>
-                )}
-                {action.userAction === "Prev" && (
-                  <div className="gap-2 flex items-center">
-                    <Image
-                      draggable="false"
-                      height={22}
-                      alt="Backward"
-                      src={Images.PrevIcon}
-                    />
-                    <p>{`Audio Skipped Backward • ${formatDate(
-                      action.createdAt
-                    )}`}</p>
-                  </div>
-                )}
-                {action.userAction === "Mute" && (
-                  <div className="gap-2 flex items-center">
-                    <Image
-                      draggable="false"
-                      height={22}
-                      alt="Mute"
-                      src={Images.MuteIcon}
-                    />
-                    <p>{`Audio Muted • ${formatDate(action.createdAt)}`}</p>
-                  </div>
-                )}
-                {action.userAction === "Unmute" && (
-                  <div className="gap-2 flex items-center">
-                    <Image
-                      draggable="false"
-                      height={22}
-                      alt="Unmute"
-                      src={Images.UnmuteIcon}
-                    />
-                    <p>{`Audio Unmuted • ${formatDate(action.createdAt)}`}</p>
                   </div>
                 )}
               </div>
