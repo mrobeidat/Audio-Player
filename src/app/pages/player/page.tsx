@@ -214,7 +214,7 @@ const Player: React.FC<PlayerProps> = () => {
   useEffect(() => {
     const textInterval = setInterval(() => {
       setTextMove((prevTextMove) =>
-        prevTextMove >= 100 ? -100 : prevTextMove + 1
+        prevTextMove >= 130 ? -130 : prevTextMove + 1
       );
     }, 20);
 
