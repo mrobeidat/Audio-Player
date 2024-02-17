@@ -8,10 +8,12 @@ import Footer from "../../components/Shared/Footer";
 import AOS from "aos"; // animate on scroll
 import "aos/dist/aos.css"; // animate on scroll styles
 import ParticleEnd from "../../components/Shared/ParticleEnd";
+import { PuffLoader } from "react-spinners";
 
 interface PlayerProps {}
 
 const Player: React.FC<PlayerProps> = () => {
+  const [loading, setLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [duration, setDuration] = useState<number>(0);
@@ -210,13 +212,30 @@ const Player: React.FC<PlayerProps> = () => {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const textInterval = setInterval(() => {
       setTextMove((prevTextMove) =>
         prevTextMove >= 100 ? -100 : prevTextMove + 1
       );
-    }, 50);
-    return () => clearInterval(interval);
+    }, 20);
+
+    const loadingInterval = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => {
+      clearInterval(textInterval);
+      clearTimeout(loadingInterval);
+    };
   }, []);
+
+  // Hard coded loading
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <PuffLoader color="rgba(225, 253, 251, 1)" size={120} />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col">
@@ -269,6 +288,7 @@ const Player: React.FC<PlayerProps> = () => {
             id="audio"
             ref={audioPlayer}
             src={AudioList[currentSongIndex]?.src}
+            autoPlay={isPlaying ? true : false}
           ></audio>
 
           {/* Buttons */}
@@ -277,42 +297,42 @@ const Player: React.FC<PlayerProps> = () => {
               onClick: () => adjustPlaybackTime(-5),
               src: Images.Backward,
               alt: "backward",
-              height: 20,
+              height: 16,
             },
             {
               onClick: playPreviousSong,
               src: Images.Prev,
-              alt: "backward",
-              height: 24,
+              alt: "prev",
+              height: 16,
             },
             {
               onClick: togglePlayPause,
               src: isPlaying ? Images.Pause : Images.Play,
               alt: isPlaying ? "pause" : "play",
-              height: 33,
+              height: 28,
             },
             {
               onClick: playNextSong,
               src: Images.Next,
-              alt: "forward",
-              height: 18,
+              alt: "next",
+              height: 16,
             },
             {
               onClick: () => adjustPlaybackTime(5),
               src: Images.Forward,
               alt: "forward",
-              height: 20,
+              height: 15,
             },
           ].map((button, index) => (
-            <button key={index} onClick={button.onClick}>
+            <a key={index} onClick={button.onClick}>
               <Image
                 src={button.src}
                 alt={button.alt}
-                className="cursor-pointer object-contain min-w-5 min-h-5 hover:fill-black"
+                className="cursor-pointer object-contain min-w-4 min-h-4 hover:fill-black"
                 draggable="false"
                 height={button.height}
               />
-            </button>
+            </a>
           ))}
 
           {/* Current time, duration, and progress bar */}
@@ -341,7 +361,7 @@ const Player: React.FC<PlayerProps> = () => {
 
         {/* View User Actions */}
         <a
-          className={`text-white flex gap-2 m-3 bg-white/30 shadow-lg shadow-pink-500/50 bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 ${
+          className={`text-white flex gap-2 m-3 bg-white/30 shadow-md shadow-pink-950/50 bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl rounded-lg px-5 py-2.5 text-center me-2 ${
             isPlaying ? "animate-down" : " animate-up"
           }`}
           href={"/pages/actions"}
