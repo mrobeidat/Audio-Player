@@ -1,14 +1,15 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import Images from "../../components/Shared/Images"; // Importing Images for audio controls
-import Audios from "../../components/Audio"; // Importing the audio file
-import ParticleStart from "../../components/Shared/ParticleStart";
-import Footer from "../../components/Shared/Footer";
+import { Images } from "../../components/Shared/Media/Images"; // Importing Images for audio controls
+import Audios from "../../components/Shared/Media/Audio"; // Importing the audio file
+import ParticleStart from "../../components/Shared/Particles/ParticleStart";
+import Footer from "../../layout/Footer";
 import AOS from "aos"; // animate on scroll
 import "aos/dist/aos.css"; // animate on scroll styles
-import ParticleEnd from "../../components/Shared/ParticleEnd";
+import ParticleEnd from "../../components/Shared/Particles/ParticleEnd";
 import { PuffLoader } from "react-spinners";
+import { AudioList } from "../../components/Shared/Media/AudioList";
 
 interface PlayerProps {}
 
@@ -26,9 +27,11 @@ const Player: React.FC<PlayerProps> = () => {
   const animationRef = useRef(null); // reference to animation
 
   const [playlist, setPlaylist] = useState<string[]>([
+    Audios.Song5,
     Audios.Song1,
     Audios.Song2,
     Audios.Song3,
+    Audios.Song4,
   ]);
 
   // Initializing AOS animations to set up animations on component mount
@@ -55,34 +58,19 @@ const Player: React.FC<PlayerProps> = () => {
     };
   }, [audioElement?.loadedmetadata, audioElement?.readyState]);
 
-  // To display the Song name and Poster
-  const AudioList = [
-    {
-      title: "My Love - Roman Dudchyk",
-      src: Audios.Song1,
-      img: Images.Poster1,
-    },
-    {
-      title: "Pleasure - AShamaluevMusic",
-      src: Audios.Song2,
-      img: Images.Poster2,
-    },
-    {
-      title: "Reverie  - AShamaluevMusic",
-      src: Audios.Song3,
-      img: Images.Poster3,
-    },
-  ];
-
   // To handle the user interaction with the audio player
-  const handleClick = async (action: string) => {
+  const handleClick = async (action: string, songTitle?: string) => {
     try {
+      const data = {
+        userAction: action,
+        songTitle: songTitle || "",
+      };
       await fetch("/api/useractions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userAction: action }),
+        body: JSON.stringify(data),
       });
       console.log("success");
     } catch (error) {
@@ -98,14 +86,14 @@ const Player: React.FC<PlayerProps> = () => {
     setIsPlaying(!previousState);
 
     if (!previousState) {
-      audioPlayer.current.play();
+      audioElement.play();
       animationRef.current = requestAnimationFrame(updateTime);
+      handleClick("Play", AudioList[currentSongIndex]?.title);
     } else {
-      audioPlayer.current.pause();
+      audioElement.pause();
       cancelAnimationFrame(animationRef.current!);
+      handleClick("Pause", AudioList[currentSongIndex]?.title);
     }
-    // Log the userAction to DB
-    handleClick(isPlaying ? "Pause" : "Play");
   };
 
   // To Mute and Unmute the audio player
@@ -117,7 +105,9 @@ const Player: React.FC<PlayerProps> = () => {
     setIsMuted(audioElement.muted);
 
     // Log the userAction to DB
-    handleClick(isMuted ? "Unmute" : "Mute");
+    const action = isMuted ? "Unmute" : "Mute";
+    const songTitle = AudioList[currentSongIndex]?.title;
+    handleClick(action, songTitle);
   };
 
   // To calculate the duration
@@ -162,8 +152,11 @@ const Player: React.FC<PlayerProps> = () => {
     progressBar.current.value = String(
       Number(progressBar.current.value) + seconds
     );
+
     handleChangeRange();
-    handleClick(seconds > 0 ? "Forward" : "Backward");
+    const action = seconds > 0 ? "Forward" : "Backward";
+    const songTitle = AudioList[currentSongIndex]?.title;
+    handleClick(action, songTitle);
   };
 
   // Switch to previous song
@@ -181,8 +174,9 @@ const Player: React.FC<PlayerProps> = () => {
         setDuration(Math.floor(audioPlayer.current.duration)); // to avoid NaN in duration
       };
     }
-    handleClick("Prev");
+    handleClick("Prev", AudioList[newIndex]?.title);
   };
+
   // switch to next song
   const playNextSong = () => {
     let nextSongIndex = currentSongIndex + 1;
@@ -199,13 +193,13 @@ const Player: React.FC<PlayerProps> = () => {
         setDuration(Math.floor(audioPlayer.current.duration)); // to avoid NaN in duration
       };
     }
-    handleClick("Next");
+    handleClick("Next", AudioList[nextSongIndex]?.title);
   };
 
   useEffect(() => {
     const textInterval = setInterval(() => {
       setTextMove((prevTextMove) =>
-        prevTextMove >= 160 ? -160 : prevTextMove + 1
+        prevTextMove >= 145 ? -145 : prevTextMove + 1
       );
     }, 37);
 
@@ -261,7 +255,7 @@ const Player: React.FC<PlayerProps> = () => {
 
           {/* Song Title and Poster */}
           <Image
-            className="max-h-64 object-cover rounded-xl max-w-80"
+            className="max-h-64 object-fill rounded-xl max-w-96"
             src={AudioList[currentSongIndex]?.img?.src || ""}
             alt={AudioList[currentSongIndex]?.title}
             height={AudioList[currentSongIndex]?.img?.height || ""}
@@ -280,7 +274,7 @@ const Player: React.FC<PlayerProps> = () => {
       <div className="flex flex-col gap-1 justify-center items-center">
         {isPlaying ? <ParticleStart /> : <ParticleEnd />}
         <div
-          className={`bg-black shadow-lg shadow-black/50 flex h-50 rounded-lg p-3 items-center gap-1 ${
+          className={`bg-black shadow-lg shadow-black/50 flex h-50 w-full rounded-lg p-3 items-center gap-1 ${
             isPlaying
               ? "backdrop-blur-md bg-black/50 poster shadow-white/60 animate-down"
               : "animate-up"

@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import Images from "./Images";
+import {Images} from "../components/Shared/Media/Images";
 
 const Navbar: React.FC = () => {
   const [currentPath, setCurrentPath] = useState<string>("");

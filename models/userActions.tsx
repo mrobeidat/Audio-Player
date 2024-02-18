@@ -2,12 +2,14 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 
 interface IUserAction extends Document {
   userAction: string;
+  songTitle: string;
 }
 
 // Define the schema for the UserAction document
 const userActionSchema: Schema<IUserAction> = new Schema(
   {
     userAction: String,
+    songTitle: String,
   },
   {
     timestamps: true,

@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Images from "../../components/Shared/Images";
+import { Images } from "../../components/Shared/Media/Images";
 import Image from "next/image";
 import { formatDate } from "../../../../libs/utils";
-import Particle from "../../components/Shared/ParticleStart";
+import Particle from "../../components/Shared/Particles/ParticleStart";
 import { GridLoader } from "react-spinners";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -12,6 +12,7 @@ import { Dropdown } from "flowbite-react";
 interface UserAction {
   userAction: string;
   createdAt: string;
+  songTitle: string;
 }
 
 const UserActions: React.FC = () => {
@@ -70,6 +71,7 @@ const UserActions: React.FC = () => {
   const handleFilterChange = (value: string) => {
     setFilter(value);
   };
+
   // Show the count of each user action
   const actionCounts = actions.reduce((counts, action) => {
     counts[action.userAction] = (counts[action.userAction] || 0) + 1;
@@ -146,7 +148,7 @@ const UserActions: React.FC = () => {
           ))}
         </Dropdown>
       </div>
-      <div className="items-center justify-center grid grid-cols-3 gap-2 p-4 flex-col parent mt-9">
+      <div className="items-center justify-center grid grid-cols-2 gap-2 p-4 flex-col parent mt-9">
         {/* Particles animation */}
         <Particle />
 
@@ -175,9 +177,9 @@ const UserActions: React.FC = () => {
                       alt={action.userAction}
                       src={Images[`${action.userAction}Icon`]}
                     />
-                    <p>{`Audio ${action.userAction}d • ${formatDate(
-                      action.createdAt
-                    )}`}</p>
+                    <p>{`Song: ${action.songTitle} • ${
+                      action.userAction
+                    }d • ${formatDate(action.createdAt)}`}</p>
                   </div>
                 )}
               </div>
