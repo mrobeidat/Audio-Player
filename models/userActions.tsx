@@ -16,7 +16,7 @@ const userActionSchema: Schema<IUserAction> = new Schema(
 
 // Check if the model already exists
 const UserActions: Model<IUserAction> =
-  mongoose.models.UserInteractions ||
-  mongoose.model<IUserAction>("UserInteractions", userActionSchema);
+  mongoose.models.TestInteraction ||
+  mongoose.model<IUserAction>("TestInteraction", userActionSchema);
 
 export default UserActions;
