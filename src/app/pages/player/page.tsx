@@ -18,17 +18,42 @@ const Player: React.FC<PlayerProps> = () => {
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [duration, setDuration] = useState<number>(0);
   const [currentTime, setCurrentTime] = useState<number>(0);
-  const [playlist, setPlaylist] = useState<string[]>([
-    Audios.Song1,
-    Audios.Song2,
-    Audios.Song3,
-  ]);
   const [currentSongIndex, setCurrentSongIndex] = useState<number>(0);
   const [TextMove, setTextMove] = useState(0);
 
   const audioPlayer = useRef(null); // reference to audio player
   const progressBar = useRef(null); // reference to progress bar
   const animationRef = useRef(null); // reference to animation
+
+  const [playlist, setPlaylist] = useState<string[]>([
+    Audios.Song1,
+    Audios.Song2,
+    Audios.Song3,
+  ]);
+
+  // Initializing AOS animations to set up animations on component mount
+  useEffect(() => {
+    AOS.init({
+      duration: 400,
+      easing: "ease-in",
+    });
+    AOS.refresh();
+  }, []);
+
+  const audioElement = audioPlayer.current;
+  const handleLoadedMetadata = () => {
+    const seconds = Math.floor(audioElement.duration);
+    setDuration(seconds);
+    progressBar.current.max = String(seconds);
+  };
+
+  useEffect(() => {
+    if (!audioElement) return; // Check if audioElement is null
+    audioElement.addEventListener("loadedmetadata", handleLoadedMetadata);
+    return () => {
+      audioElement.removeEventListener("loadedmetadata", handleLoadedMetadata);
+    };
+  }, [audioElement?.loadedmetadata, audioElement?.readyState]);
 
   // To display the Song name and Poster
   const AudioList = [
@@ -64,40 +89,6 @@ const Player: React.FC<PlayerProps> = () => {
       console.log(error);
     }
   };
-
-  // Initializing AOS animations to set up animations on component mount
-  useEffect(() => {
-    AOS.init({
-      duration: 400,
-      easing: "ease-in",
-    });
-    AOS.refresh();
-  }, []);
-
-  // reset the progressBar and currentTime to 0
-  const handleEnded = () => {
-    setIsPlaying(false);
-    setCurrentTime((audioPlayer.current.currentTime = 0)); // reset the current time
-    progressBar.current.value = 0; // reset the progressbar position
-    playNextSong();
-  };
-
-  useEffect(() => {
-    const audioElement = audioPlayer.current;
-    const progressElement = progressBar.current;
-
-    if (!audioElement || !progressElement) return;
-
-    audioElement.addEventListener("ended", handleEnded);
-
-    const seconds = Math.floor(audioElement.duration);
-    setDuration(seconds);
-    progressElement.max = String(seconds);
-
-    return () => {
-      audioElement.removeEventListener("ended", handleEnded);
-    };
-  }, [currentSongIndex, progressBar]);
 
   // To play and pause the audio player
   const togglePlayPause = () => {
@@ -264,7 +255,7 @@ const Player: React.FC<PlayerProps> = () => {
         >
           {/* Duration line */}
           <div
-            className="absolute left-1.5 bottom-0 h-1 bg-gradient-to-r from-red-500 via-pink-600 to-rose-900 transition-all duration-1000"
+            className="absolute left-1.5 bottom-0 h-1 bg-gradient-to-r from-red-500 via-pink-600 to-rose-900 transition-all duration-700"
             style={{ width: `${(currentTime / duration) * 100}%` }}
           ></div>
 
@@ -301,12 +292,13 @@ const Player: React.FC<PlayerProps> = () => {
         >
           {/* Audio element */}
           <audio
-            className="animate-down"
-            preload="metadata"
             id="audio"
+            className="animate-down"
+            onEnded={playNextSong}
+            onLoadedMetadata={handleLoadedMetadata}
+            autoPlay={isPlaying ? true : false}
             ref={audioPlayer}
             src={AudioList[currentSongIndex]?.src}
-            autoPlay={isPlaying ? true : false}
           ></audio>
           {/* Buttons */}
           {[
@@ -359,7 +351,7 @@ const Player: React.FC<PlayerProps> = () => {
           </div>
           <input
             type="range"
-            className="overflow-hidden progressBar"
+            className="overflow-hidden progressBar hover:cursor-pointer"
             defaultValue="0"
             ref={progressBar}
             onChange={handleChangeRange}
