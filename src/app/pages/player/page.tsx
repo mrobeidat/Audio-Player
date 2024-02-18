@@ -255,7 +255,7 @@ const Player: React.FC<PlayerProps> = () => {
 
           {/* Song Title and Poster */}
           <Image
-            className="max-h-64 object-fill rounded-xl max-w-96"
+            className="max-h-64 object-cover rounded-xl max-w-80"
             src={AudioList[currentSongIndex]?.img?.src || ""}
             alt={AudioList[currentSongIndex]?.title}
             height={AudioList[currentSongIndex]?.img?.height || ""}

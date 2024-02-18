@@ -81,8 +81,10 @@ const UserActions: React.FC = () => {
   const AllActionsCount = actions.length;
   const PlayCount = actionCounts["Play"] || 0;
   const PauseCount = actionCounts["Pause"] || 0;
+  const NextCount = actionCounts["Next"] || 0;
   const ForwardCount = actionCounts["Forward"] || 0;
   const BackwardCount = actionCounts["Backward"] || 0;
+  const PrevCount = actionCounts["Prev"] || 0;
   const MuteCount = actionCounts["Mute"] || 0;
   const UnmuteCount = actionCounts["Unmute"] || 0;
 
@@ -125,17 +127,17 @@ const UserActions: React.FC = () => {
           {[
             { action: "Play", count: PlayCount },
             { action: "Pause", count: PauseCount },
-            { action: "Next", count: ForwardCount },
+            { action: "Next", count: NextCount },
             { action: "Forward", count: ForwardCount },
             { action: "Backward", count: BackwardCount },
-            { action: "Prev", count: ForwardCount },
+            { action: "Prev", count: PrevCount },
             { action: "Mute", count: MuteCount },
             { action: "Unmute", count: UnmuteCount },
           ].map(({ action, count }) => (
             <Dropdown.Item
               key={action}
               onClick={() => handleFilterChange(action)}
-              className="flex gap-2 hover:bg-black/20 rounded-3xl"
+              className="flex text-white gap-2 hover:bg-black/20 rounded-3xl"
             >
               <Image
                 draggable="false"
@@ -177,9 +179,9 @@ const UserActions: React.FC = () => {
                       alt={action.userAction}
                       src={Images[`${action.userAction}Icon`]}
                     />
-                    <p>{`Song: ${action.songTitle} • ${
+                    <p>{`Song -> (${action.songTitle}) • Action -> (${
                       action.userAction
-                    }d • ${formatDate(action.createdAt)}`}</p>
+                    }) • ${formatDate(action.createdAt)}`}</p>
                   </div>
                 )}
               </div>
