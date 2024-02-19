@@ -231,7 +231,7 @@ const Player: React.FC<PlayerProps> = () => {
           data-aos-duration="2000"
           data-aos-easing="ease-in"
           data-aos-once="true"
-          className={`muzik muzik-playing `}
+          className={`muzik z-10`}
         >
           {[...Array(10)].map((_, index) => (
             <div className="audio_animation" key={index}></div>
@@ -364,8 +364,8 @@ const Player: React.FC<PlayerProps> = () => {
 
         {/* View User Actions */}
         <a
-          className={`text-white flex gap-2 m-3 bg-white/30 shadow-md shadow-pink-950/50 bg-gradient-to-br from-pink-500 to-red-800 hover:bg-gradient-to-bl rounded-lg px-5 py-2.5 text-center me-2 ${
-            isPlaying ? "animate-down" : " animate-up"
+          className={`text-white flex gap-2 m-3 shadow-md bg-gradient-to-br from-pink-500 to-red-800 hover:from-red-800 hover:to-pink-500 hover:bg-gradient-to-bl rounded-lg px-5 py-2.5 text-center transition-background duration-300 transform ${
+            isPlaying ? "animate-down" : "animate-up"
           }`}
           href={"/pages/actions"}
         >

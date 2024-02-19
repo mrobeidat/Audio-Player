@@ -120,7 +120,7 @@ const UserActions: React.FC = () => {
         >
           <Dropdown.Item
             onClick={() => handleFilterChange("All")}
-            className="flex gap-2 hover:bg-black/20 rounded-3xl"
+            className="flex gap-2 hover:bg-black/20 rounded-3xl text-white"
           >
             All ({AllActionsCount})
           </Dropdown.Item>
