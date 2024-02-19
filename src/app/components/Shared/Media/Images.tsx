@@ -19,6 +19,7 @@ export const Images = {
   BackwardIcon: require("../../../../assets/backward-icon.png").default,
   MuteIcon: require("../../../../assets/mute-icon.png").default,
   UnmuteIcon: require("../../../../assets/unmute-icon.png").default,
+  SeekIcon: require("../../../../assets/seek.png").default,
 
   // For button icons
   NextArrow: require("../../../../assets/arrow.png").default,

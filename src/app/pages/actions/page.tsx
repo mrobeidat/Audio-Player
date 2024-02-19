@@ -85,6 +85,7 @@ const UserActions: React.FC = () => {
   const ForwardCount = actionCounts["Forward"] || 0;
   const BackwardCount = actionCounts["Backward"] || 0;
   const PrevCount = actionCounts["Prev"] || 0;
+  const SeekCount = actionCounts["Seek"] || 0;
   const MuteCount = actionCounts["Mute"] || 0;
   const UnmuteCount = actionCounts["Unmute"] || 0;
 
@@ -131,6 +132,7 @@ const UserActions: React.FC = () => {
             { action: "Forward", count: ForwardCount },
             { action: "Backward", count: BackwardCount },
             { action: "Prev", count: PrevCount },
+            { action: "Seek", count: SeekCount },
             { action: "Mute", count: MuteCount },
             { action: "Unmute", count: UnmuteCount },
           ].map(({ action, count }) => (
