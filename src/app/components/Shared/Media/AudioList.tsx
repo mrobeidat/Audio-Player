@@ -2,6 +2,7 @@
 import Audios from "./Audio"; // Importing the audio file
 import { Images } from "./Images"; // Importing Images for audio controls
 
+// Audio Posters and source files
 export const AudioList = [
   {
     title: "Cymatics - Nigel Stanford ",
@@ -28,4 +29,13 @@ export const AudioList = [
     src: Audios.Song4,
     img: Images.Poster4,
   },
+];
+
+// Audio files playlist
+export const playlist = [
+  Audios.Song1,
+  Audios.Song2,
+  Audios.Song3,
+  Audios.Song4,
+  Audios.Song5,
 ];
