@@ -130,6 +130,10 @@ const Player: React.FC<PlayerProps> = () => {
     );
     setCurrentTime(Number(progressBar.current.value));
     progressBar.current.max = String(duration);
+
+    // Log "seek" and song title
+    const songTitle = AudioList[currentSongIndex]?.title;
+    handleClick("Seek", songTitle);
   };
 
   // To update the current time of the audio
