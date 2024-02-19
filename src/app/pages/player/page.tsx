@@ -407,6 +407,7 @@ const Player: React.FC<PlayerProps> = () => {
         <a
           className={`text-white flex gap-2 m-3 shadow-md bg-gradient-to-br from-pink-500 to-red-800 hover:from-red-800 hover:to-pink-500 hover:bg-gradient-to-bl rounded-lg px-5 py-2.5 text-center transition-background duration-300 transform ${
             playerState.isPlaying ? "animate-down" : "animate-up"
+
           }`}
           href={"/pages/actions"}
         >
