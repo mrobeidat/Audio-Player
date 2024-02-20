@@ -279,7 +279,7 @@ const Player: React.FC<PlayerProps> = () => {
       <div className="flex flex-col gap-1 justify-center items-center">
         {isPlaying ? <ParticleStart /> : <ParticleEnd />}
         <div
-          className={`bg-black shadow-lg shadow-black/50 flex h-50 w-full rounded-lg p-3 items-center gap-1 ${
+          className={`bg-black shadow-2xl shadow-black/50 flex h-50 w-full rounded-full p-3 items-center gap-1 ${
             isPlaying
               ? "backdrop-blur-md bg-black/50 poster shadow-white/60 animate-down"
               : "animate-up"
@@ -369,7 +369,7 @@ const Player: React.FC<PlayerProps> = () => {
 
         {/* View User Actions */}
         <a
-          className={`text-white flex gap-2 m-3 shadow-md bg-gradient-to-br from-pink-500 to-red-800 hover:from-red-800 hover:to-pink-500 hover:bg-gradient-to-bl rounded-lg px-5 py-2.5 text-center transition-background duration-300 transform ${
+          className={`text-white flex gap-2 m-3 shadow-md bg-gradient-to-br from-pink-500 to-red-800 hover:from-red-800 hover:to-pink-500 hover:bg-gradient-to-bl rounded-full px-5 py-2.5 text-center transition-background duration-300 transform ${
             isPlaying ? "animate-down" : "animate-up"
           }`}
           href={"/pages/actions"}
