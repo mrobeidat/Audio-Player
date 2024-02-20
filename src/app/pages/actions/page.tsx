@@ -167,7 +167,9 @@ const UserActions: React.FC = () => {
               data-aos="fade-up"
               data-aos-easing="ease-in"
               data-aos-once="true"
-              data-aos-delay={`${index * 100}`}
+              data-aos-offset="50"
+              data-aos-anchor-placement="top-bottom"
+              // data-aos-delay={`${index * 100}`}
               key={index}
               className="backdrop-blur bg-black/30 block w-full px-4 py-2 text-base font-medium rounded-lg text-white useraction-description "
             >
