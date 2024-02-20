@@ -164,8 +164,8 @@ const UserActions: React.FC = () => {
           )
           .map((action, index) => (
             <h2
-              data-aos="fade-up"
-              data-aos-easing="ease-in"
+              data-aos="flip-up"
+              data-aos-easing="ease-in-quad"
               data-aos-once="true"
               data-aos-offset="50"
               data-aos-anchor-placement="top-bottom"
