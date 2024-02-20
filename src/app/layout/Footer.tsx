@@ -8,14 +8,15 @@ const Footer: React.FC = () => {
   return (
     <>
       <footer className="fixed bottom-0 left-0 right-0 backdrop-blur bg-black/30 text-center">
-        <div className="w-full max-w-screen-xl mx-auto p-4 md:py-2 gap-3">
+        <div className="w-full max-w-screen-xl mx-auto p-2.5 md:py-2">
           <a
             href="https://yousef-portfolio.vercel.app"
             target="_blank"
             className="footer"
           >
-            <p>{currentYear}&copy; </p>
-            <span>Made with❤️by Yousef Obeidat</span>
+            <p className="font-sans">
+              {currentYear}&copy; Made with<span>❤️</span>by Yousef Obeidat
+            </p>
           </a>
           <div className="flex gap-3 justify-center mt-4">
             <a
