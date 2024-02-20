@@ -98,7 +98,6 @@ const Player: React.FC<PlayerProps> = () => {
 
   // To Mute and Unmute the audio player
   const toggleMuteUnmute = () => {
-    const audioElement = audioPlayer.current;
     if (!audioElement) return;
 
     audioElement.muted = !audioElement.muted;
@@ -121,9 +120,9 @@ const Player: React.FC<PlayerProps> = () => {
 
   // To control the audio duration
   const handleChangeRange = () => {
-    if (!audioPlayer.current || !progressBar.current) return;
+    if (!audioElement || !progressBar.current) return;
 
-    audioPlayer.current.currentTime = Number(progressBar.current.value);
+    audioElement.currentTime = Number(progressBar.current.value);
     progressBar.current.style.setProperty(
       "--seek-before-width",
       `${(Number(progressBar.current.value) / duration) * 100}%`
@@ -138,9 +137,9 @@ const Player: React.FC<PlayerProps> = () => {
 
   // To update the current time of the audio
   const updateTime = () => {
-    if (!audioPlayer.current || !progressBar.current) return;
+    if (!audioElement || !progressBar.current) return;
 
-    progressBar.current.value = String(audioPlayer.current.currentTime);
+    progressBar.current.value = String(audioElement.currentTime);
     progressBar.current.style.setProperty(
       "$seek-before-width",
       `${(Number(progressBar.current.value) / duration) * 100}%`
@@ -165,23 +164,23 @@ const Player: React.FC<PlayerProps> = () => {
 
   // Switch to previous song
   const playPreviousSong = () => {
-    let newIndex = currentSongIndex - 1;
-    if (newIndex < 0) {
-      newIndex = playlist.length - 1;
+    let PreviousSongIndex = currentSongIndex - 1;
+    if (PreviousSongIndex < 0) {
+      PreviousSongIndex = playlist.length - 1;
     }
-    setCurrentSongIndex(newIndex);
+    setCurrentSongIndex(PreviousSongIndex);
     setIsPlaying(true);
-    if (audioPlayer.current) {
-      audioPlayer.current.src = playlist[newIndex];
-      audioPlayer.current.play();
-      audioPlayer.current.onloadedmetadata = () => {
-        setDuration(Math.floor(audioPlayer.current.duration)); // to avoid NaN in duration
+    if (audioElement) {
+      audioElement.src = playlist[PreviousSongIndex];
+      audioElement.play();
+      audioElement.onloadedmetadata = () => {
+        setDuration(Math.floor(audioElement.duration)); // to avoid NaN in duration
       };
     }
-    handleClick("Prev", AudioList[newIndex]?.title);
+    handleClick("Prev", AudioList[PreviousSongIndex]?.title);
   };
 
-  // switch to next song
+  // Switch to next song
   const playNextSong = () => {
     let nextSongIndex = currentSongIndex + 1;
     // If it's the last song, loop back to the first song
@@ -191,22 +190,24 @@ const Player: React.FC<PlayerProps> = () => {
     setCurrentSongIndex(nextSongIndex);
     setIsPlaying(true);
     if (audioPlayer.current) {
-      audioPlayer.current.src = playlist[nextSongIndex];
-      audioPlayer.current.play();
-      audioPlayer.current.onloadedmetadata = () => {
-        setDuration(Math.floor(audioPlayer.current.duration)); // to avoid NaN in duration
+      audioElement.src = playlist[nextSongIndex];
+      audioElement.play();
+      audioElement.onloadedmetadata = () => {
+        setDuration(Math.floor(audioElement.duration)); // to avoid NaN in duration
       };
     }
     handleClick("Next", AudioList[nextSongIndex]?.title);
   };
 
   useEffect(() => {
+    // Text animation
     const textInterval = setInterval(() => {
       setTextMove((prevTextMove) =>
         prevTextMove >= 145 ? -145 : prevTextMove + 1
       );
     }, 37);
 
+    // static loading
     const loadingInterval = setTimeout(() => {
       setLoading(false);
     }, 2000);

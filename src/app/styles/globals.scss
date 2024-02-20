@@ -27,7 +27,7 @@
   }
 }
 
-//footer
+//footer text
 .footer {
   color: #fff;
   text-transform: uppercase;
@@ -51,19 +51,4 @@
     width: 100%;
     left: 0;
   }
-}
-
-.custom-link {
-  text-decoration: none;
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 5px;
-  color: white;
-  background: linear-gradient(to bottom right, #ff007f, #ff4500);
-  transition: background 0.3s, transform 0.3s;
-}
-
-.custom-link:hover {
-  background: linear-gradient(to bottom left, #ff4500, #ff007f);
-  transform: scale(1.5);
 }
