@@ -203,7 +203,7 @@ const Player: React.FC<PlayerProps> = () => {
     // Text animation
     const textInterval = setInterval(() => {
       setTextMove((prevTextMove) =>
-        prevTextMove >= 145 ? -145 : prevTextMove + 1
+        prevTextMove >= 160 ? -160 : prevTextMove + 1
       );
     }, 37);
 
