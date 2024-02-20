@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import {Images} from "../components/Shared/Media/Images";
+import { Images } from "../components/Shared/Media/Images";
 
 const Navbar: React.FC = () => {
   const [currentPath, setCurrentPath] = useState<string>("");
@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
             <div className="max-w-screen-xl flex items-center justify-center px-3.5 py-1">
               <a href="/" className="flex space-x-3 rtl:space-x-reverse">
                 <Image
-                draggable="false"
+                  draggable="false"
                   src={Images.Logo}
                   className="h-14 w-40 align-middle object-contain"
                   alt="Logo"
