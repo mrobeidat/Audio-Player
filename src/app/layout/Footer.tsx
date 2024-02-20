@@ -9,13 +9,13 @@ const Footer: React.FC = () => {
     <>
       <footer className="fixed bottom-0 left-0 right-0 backdrop-blur bg-black/30 text-center">
         <div className="w-full max-w-screen-xl mx-auto p-4 md:py-2 gap-3">
-          <p className="text-white">Made by:</p>
           <a
             href="https://yousef-portfolio.vercel.app"
             target="_blank"
             className="footer"
           >
-            {currentYear}&copy; Yousef Obeidat
+            <p>{currentYear}&copy; </p>
+            <span>Made with❤️by Yousef Obeidat</span>
           </a>
           <div className="flex gap-3 justify-center mt-4">
             <a
