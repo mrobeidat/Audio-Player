@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Images } from "../../components/Shared/Media/Images"; // Importing Images for audio controls
 import Audios from "../../components/Shared/Media/Audio"; // Importing the audio file
 import { Particle } from "../../components/Shared/Particles/Particles";
-import Footer from "../../layout/Footer";
 import AOS from "aos"; // animate on scroll
 import "aos/dist/aos.css"; // animate on scroll styles
 import { PuffLoader } from "react-spinners";
@@ -376,9 +375,6 @@ const Player: React.FC<PlayerProps> = () => {
           <p>View User Actions</p>
           <Image height={20} width={20} alt="arrow" src={Images.NextArrow} />
         </a>
-
-        {/* Footer */}
-        <Footer />
       </div>
     </div>
   );
