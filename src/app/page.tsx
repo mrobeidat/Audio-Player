@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import Player from "./pages/player/page";
 const Home: React.FC = () => {

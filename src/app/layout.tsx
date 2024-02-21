@@ -4,6 +4,7 @@ import "./styles/globals.scss";
 import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./layout/Navbar";
+import Footer from "./layout/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <Navbar />
         {children}
+        <Footer/>
         <Analytics />
       </body>
     </html>
