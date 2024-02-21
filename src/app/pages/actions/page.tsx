@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Images } from "../../components/Shared/Media/Images";
 import Image from "next/image";
 import { formatDate } from "../../../../libs/utils";
-import Particle from "../../components/Shared/Particles/ParticleStart";
+import Particle from "../../components/Shared/Particles/Particles";
 import { GridLoader } from "react-spinners";
 import AOS from "aos";
 import "aos/dist/aos.css";
