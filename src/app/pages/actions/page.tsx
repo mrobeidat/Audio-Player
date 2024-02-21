@@ -117,6 +117,7 @@ const UserActions: React.FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
             backgroundColor: "rgba(10, 10, 0, 0.4)",
             backdropFilter: "blur(80px)",
             zIndex: "99",
+            borderRadius: "100px",
           }}
         >
           {/* Dropdown items */}
