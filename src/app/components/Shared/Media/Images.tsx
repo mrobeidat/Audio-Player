@@ -31,6 +31,7 @@ export const Images = {
   Poster3: require("../../../../assets/poster3.png").default,
   Poster4: require("../../../../assets/poster4.png").default,
   Poster5: require("../../../../assets/poster5.png").default,
+  Poster6: require("../../../../assets/poster6.png").default,
 
   // For social icons
   Repository: require("../../../../assets/repository.png").default,

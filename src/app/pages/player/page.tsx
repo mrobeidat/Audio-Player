@@ -25,11 +25,12 @@ const Player: React.FC<PlayerProps> = () => {
   const animationRef = useRef(null); // reference to animation
 
   const [playlist, setPlaylist] = useState<string[]>([
-    Audios.Song5,
     Audios.Song1,
     Audios.Song2,
     Audios.Song3,
     Audios.Song4,
+    Audios.Song5,
+    Audios.Song6
   ]);
 
   // Initializing AOS animations to set up animations on component mount

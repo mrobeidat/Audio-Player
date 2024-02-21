@@ -5,11 +5,6 @@ import { Images } from "./Images"; // Importing Images for audio controls
 // Audio Posters and source files
 export const AudioList = [
   {
-    title: "Cymatics - Nigel Stanford ",
-    src: Audios.Song5,
-    img: Images.Poster5,
-  },
-  {
     title: "My Love - Roman Dudchyk",
     src: Audios.Song1,
     img: Images.Poster1,
@@ -29,13 +24,15 @@ export const AudioList = [
     src: Audios.Song4,
     img: Images.Poster4,
   },
+  {
+    title: "Cymatics - Nigel Stanford ",
+    src: Audios.Song5,
+    img: Images.Poster5,
+  },
+  {
+    title: "Love Exists - AMY LEE",
+    src: Audios.Song6,
+    img: Images.Poster6,
+  },
 ];
 
-// Audio files playlist
-export const playlist = [
-  Audios.Song1,
-  Audios.Song2,
-  Audios.Song3,
-  Audios.Song4,
-  Audios.Song5,
-];
