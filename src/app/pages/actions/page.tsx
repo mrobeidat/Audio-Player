@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Images } from "../../components/Shared/Media/Images";
 import Image from "next/image";
 import { formatDate } from "../../../../libs/utils";
-import Particle from "../../components/Shared/Particles/ParticleStart";
+import { Particle } from "../../components/Shared/Particles/Particles";
 import { GridLoader } from "react-spinners";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -13,9 +13,10 @@ interface UserAction {
   userAction: string;
   createdAt: string;
   songTitle: string;
+  isPlaying: boolean;
 }
 
-const UserActions: React.FC = () => {
+const UserActions: React.FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
   const [actions, setActions] = useState<UserAction[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [filter, setFilter] = useState<string>("All"); // Filteration based on action type
@@ -162,7 +163,7 @@ const UserActions: React.FC = () => {
       </div>
       <div className="items-center justify-center grid gap-2 p-4 parent mt-28">
         {/* Particles animation */}
-        <Particle />
+        <Particle isPlaying />
 
         {/* Sort the user actions based on date and time */}
         {filteredActions
