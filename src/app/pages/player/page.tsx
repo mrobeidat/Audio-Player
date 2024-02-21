@@ -372,7 +372,7 @@ const Player: React.FC<PlayerProps> = () => {
           }`}
           href={"/pages/actions"}
         >
-          <p>View User Actions</p>
+          <p>View User Actions</p> 
           <Image height={20} width={20} alt="arrow" src={Images.NextArrow} />
         </a>
       </div>
