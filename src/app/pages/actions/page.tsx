@@ -16,7 +16,7 @@ interface UserAction {
   isPlaying: boolean;
 }
 
-const UserActions: React.FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
+const UserActions: React.FC = () => {
   const [actions, setActions] = useState<UserAction[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [filter, setFilter] = useState<string>("All"); // Filteration based on action type
