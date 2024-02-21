@@ -3,13 +3,12 @@ import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { Images } from "../../components/Shared/Media/Images"; // Importing Images for audio controls
 import Audios from "../../components/Shared/Media/Audio"; // Importing the audio file
-import ParticleStart from "../../components/Shared/Particles/ParticleStart";
 import Footer from "../../layout/Footer";
 import AOS from "aos"; // animate on scroll
 import "aos/dist/aos.css"; // animate on scroll styles
-import ParticleEnd from "../../components/Shared/Particles/ParticleEnd";
 import { PuffLoader } from "react-spinners";
 import { AudioList } from "../../components/Shared/Media/AudioList";
+import {Particle} from "../../components/Shared/Particles/Particles";
 
 interface PlayerProps {}
 
@@ -277,7 +276,7 @@ const Player: React.FC<PlayerProps> = () => {
 
       {/* Audio Controls */}
       <div className="flex flex-col gap-1 justify-center items-center">
-        {isPlaying ? <ParticleStart /> : <ParticleEnd />}
+        {<Particle isPlaying={isPlaying}  />}
         <div
           className={`bg-black shadow-2xl shadow-black/50 flex h-50 w-full rounded-full p-3 items-center gap-1 ${
             isPlaying
