@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { loadSlim } from "tsparticles-slim";
 import Particles from "react-particles";
 import type { Engine } from "tsparticles-engine";
-export const Particle: React.FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
+const ParticleEnd = () => {
   const particlesInit = useCallback(async (engine: Engine) => {
     console.log(engine);
     await loadSlim(engine);
@@ -51,19 +51,19 @@ export const Particle: React.FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
           },
           particles: {
             color: {
-              value: ["#d71515", "#d715d7", "#d71579", "#d71515", "#fff"],
+              value: ["#d715d7", "#d71515", "#d70415", "#d76715"],
               animation: {
                 enable: true,
-                speed: 200,
+                speed: 70,
               },
             },
             move: {
               enable: true,
-              speed: isPlaying ? 5 : 15,
-              direction: isPlaying ? "outside" : "inside",
+              speed: 15,
+              direction: "inside",
               random: true,
               straight: true,
-              out_mode: isPlaying ? "out" : "destroy",
+              out_mode: "destroy",
               attract: {
                 enable: false,
                 rotateX: 500,
@@ -71,7 +71,7 @@ export const Particle: React.FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
               },
             },
             number: {
-              value: 250,
+              value: 350,
               density: {
                 enable: true,
                 area: 800,
@@ -151,3 +151,5 @@ export const Particle: React.FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
     </>
   );
 };
+
+export default ParticleEnd;
