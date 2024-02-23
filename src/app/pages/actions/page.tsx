@@ -60,7 +60,9 @@ const UserActions: React.FC = () => {
       }
     };
 
-    fetchData();
+    if (!actions.length) {
+      fetchData();
+    }
   }, [actions]);
 
   // Filter user actions by type
@@ -164,7 +166,7 @@ const UserActions: React.FC = () => {
       </div>
       <div className="items-center justify-center grid gap-2 p-4 parent mt-28">
         {/* Particles animation */}
-        {/* <Particle isPlaying /> */}
+        <Particle isPlaying />
 
         {/* Sort the user actions based on date and time */}
         {filteredActions
