@@ -61,7 +61,7 @@ const UserActions: React.FC = () => {
     };
 
     fetchData();
-  }, []);
+  }, [actions]);
 
   // Filter user actions by type
   const filteredActions = actions.filter((action) => {
