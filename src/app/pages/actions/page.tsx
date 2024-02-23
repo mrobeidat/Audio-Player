@@ -59,10 +59,7 @@ const UserActions: React.FC = () => {
         setLoading(false);
       }
     };
-
-    if (!actions.length) {
-      fetchData();
-    }
+    fetchData();
   }, [actions]);
 
   // Filter user actions by type
