@@ -30,37 +30,37 @@ const UserActions: React.FC = () => {
     AOS.refresh();
   }, []);
 
+  const fetchData = async () => {
+    try {
+      const res = await fetch("/api/useractions", {
+        cache: "no-store",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const data = await res.json();
+      console.log("Fetched data:", JSON.stringify(data));
+
+      // Check the data type of the response
+      if (Array.isArray(data.actions)) {
+        setActions(data.actions);
+      } else {
+        throw new Error("Data is not in the expected format");
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error loading user actions", error);
+      // setActions([]);
+      setLoading(false);
+    }
+  };
   // Fetch the user actions from the server once the component is mounted
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch("/api/useractions", {
-          cache: "no-store",
-        });
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch data");
-        }
-
-        const data = await res.json();
-        console.log("Fetched data:", JSON.stringify(data));
-
-        // Check the data type of the response
-        if (Array.isArray(data.actions)) {
-          setActions(data.actions);
-        } else {
-          throw new Error("Data is not in the expected format");
-        }
-
-        setLoading(false);
-      } catch (error) {
-        console.error("Error loading user actions", error);
-        setActions([]);
-        setLoading(false);
-      }
-    };
     fetchData();
-  }, []);
+  }, [actions]);
 
   // Filter user actions by type
   const filteredActions = actions.filter((action) => {
