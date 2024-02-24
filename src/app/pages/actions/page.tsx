@@ -143,9 +143,9 @@ const UserActions: React.FC = () => {
             { action: "Unmute", count: UnmuteCount },
           ].map(({ action, count }) => (
             <Dropdown.Item
-              data-aos="flip-up"
-              data-aos-easing="ease-in-quad"
-              data-aos-once="true"
+              // data-aos="flip-up"
+              // data-aos-easing="ease-in"
+              // data-aos-once="true"
               key={action}
               onClick={() => handleFilterChange(action)}
               className="flex text-white gap-2 hover:bg-black/20 rounded-3xl"
@@ -173,9 +173,9 @@ const UserActions: React.FC = () => {
           )
           .map((action, index) => (
             <h2
-              data-aos="flip-up"
-              data-aos-easing="ease-in-quad"
-              data-aos-once="true"
+              // data-aos="flip-up"
+              // data-aos-easing="ease-in"
+              // data-aos-once="true"
               // data-aos-offset="50"
               // data-aos-anchor-placement="top-bottom"
               key={index}
