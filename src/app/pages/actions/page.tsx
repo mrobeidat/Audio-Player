@@ -30,37 +30,37 @@ const UserActions: React.FC = () => {
     AOS.refresh();
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const res = await fetch("/api/useractions", {
-        cache: "no-store",
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to fetch data");
-      }
-
-      const data = await res.json();
-      console.log("Fetched data:", JSON.stringify(data));
-
-      // Check the data type of the response
-      if (Array.isArray(data.actions)) {
-        setActions(data.actions);
-      } else {
-        throw new Error("Data is not in the expected format");
-      }
-
-      setLoading(false);
-    } catch (error) {
-      console.error("Error loading user actions", error);
-      // setActions([]);
-      setLoading(false);
-    }
-  };
   // Fetch the user actions from the server once the component is mounted
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/api/useractions", {
+          cache: "no-store",
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+        }
+
+        const data = await res.json();
+        console.log("Fetched data:", JSON.stringify(data));
+
+        // Check the data type of the response
+        if (Array.isArray(data.actions)) {
+          setActions(data.actions);
+        } else {
+          throw new Error("Data is not in the expected format");
+        }
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Error loading user actions", error);
+        setActions([]);
+        setLoading(false);
+      }
+    };
     fetchData();
-  }, [actions]);
+  }, []);
 
   // Filter user actions by type
   const filteredActions = actions.filter((action) => {
@@ -124,8 +124,8 @@ const UserActions: React.FC = () => {
             data-aos="flip-up"
             data-aos-easing="ease-in-quad"
             data-aos-once="true"
-            data-aos-offset="50"
-            data-aos-anchor-placement="top-bottom"
+            // data-aos-offset="50"
+            // data-aos-anchor-placement="top-bottom"
             onClick={() => handleFilterChange("All")}
             className="flex gap-2 hover:bg-black/20 rounded-3xl text-white"
           >
@@ -176,8 +176,8 @@ const UserActions: React.FC = () => {
               data-aos="flip-up"
               data-aos-easing="ease-in-quad"
               data-aos-once="true"
-              data-aos-offset="50"
-              data-aos-anchor-placement="top-bottom"
+              // data-aos-offset="50"
+              // data-aos-anchor-placement="top-bottom"
               key={index}
               className="backdrop-blur bg-black/30 block w-full px-4 py-2 text-base font-normal rounded-full text-white useraction-description "
             >
