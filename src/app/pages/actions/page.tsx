@@ -60,7 +60,7 @@ const UserActions: React.FC = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [actions]);
 
   // Filter user actions by type
   const filteredActions = actions.filter((action) => {
@@ -121,11 +121,6 @@ const UserActions: React.FC = () => {
         >
           {/* Dropdown items */}
           <Dropdown.Item
-            data-aos="fade-up"
-            data-aos-easing="ease-in"
-            data-aos-once="true"
-            // data-aos-offset="50"
-            // data-aos-anchor-placement="top-bottom"
             onClick={() => handleFilterChange("All")}
             className="flex gap-2 hover:bg-black/20 rounded-3xl text-white"
           >
@@ -176,8 +171,6 @@ const UserActions: React.FC = () => {
               data-aos="fade-up"
               data-aos-easing="ease-in"
               data-aos-once="true"
-              // data-aos-offset="50"
-              // data-aos-anchor-placement="top-bottom"
               key={index}
               className="backdrop-blur bg-black/30 block w-full px-4 py-2 text-base font-normal rounded-full text-white useraction-description "
             >
