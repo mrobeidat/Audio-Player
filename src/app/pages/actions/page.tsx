@@ -121,9 +121,9 @@ const UserActions: React.FC = () => {
         >
           {/* Dropdown items */}
           <Dropdown.Item
-            data-aos="flip-up"
-            data-aos-easing="ease-in-quad"
-            data-aos-once="true"
+            // data-aos="flip-up"
+            // data-aos-easing="ease-in-quad"
+            // data-aos-once="true"
             // data-aos-offset="50"
             // data-aos-anchor-placement="top-bottom"
             onClick={() => handleFilterChange("All")}
