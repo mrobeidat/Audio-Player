@@ -43,7 +43,7 @@ const UserActions: React.FC = () => {
         }
 
         const data = await res.json();
-        console.log("Fetched data:", data);
+        console.log("Fetched data:", JSON.stringify(data));
 
         // Check the data type of the response
         if (Array.isArray(data.actions)) {
