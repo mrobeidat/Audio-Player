@@ -18,6 +18,10 @@ export async function POST(req: any) {
 
 // Fetch user actions from the server
 export async function GET() {
-  const actions = await UserAction.find();
-  return NextResponse.json({ actions });
+  try {
+    const actions = await UserAction.find().sort({ createdAt: "desc" }).exec();
+    return NextResponse.json({ actions });
+  } catch (error) {
+    console.error("Error fetching user actions:", error);
+  }
 }

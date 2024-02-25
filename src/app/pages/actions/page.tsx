@@ -159,10 +159,6 @@ const UserActions: React.FC = () => {
 
         {/* Sort the user actions based on date and time */}
         {filteredActions
-          .sort(
-            (a, b) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          )
           .map((action, index) => (
             <h2
               data-aos="fade-up"
