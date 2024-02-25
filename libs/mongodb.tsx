@@ -9,7 +9,7 @@ const connectMongoDB = async () => {
     console.log("Connected to MongoDB");
 
     // Create indexes for userAction and songTitle fields
-    await mongoose.connection.collection("userActions").createIndex(
+    await mongoose.connection.collection("UserInteractions").createIndex(
       { userAction: 1, songTitle: 1 },
       { background: true } 
     );
