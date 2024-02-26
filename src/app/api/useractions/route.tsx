@@ -19,7 +19,9 @@ export async function POST(req: any) {
 // Fetch user actions from the server
 export async function GET() {
   try {
-    const actions = await UserAction.aggregate().sort({ createdAt: "desc" }).exec();
+    const actions = await UserAction.aggregate([
+      { $sort: { createdAt: -1 } },
+    ]).exec();
     return NextResponse.json({ actions });
   } catch (error) {
     console.error("Error fetching user actions:", error);
