@@ -50,7 +50,7 @@ npm install
 Start the development server by running the following command:
 
 ```bash
-npm start
+npm run dev
 ```
 
 ### 6. Open the App in Your Browser
