@@ -138,9 +138,6 @@ const UserActions: React.FC = () => {
             { action: "Unmute", count: UnmuteCount },
           ].map(({ action, count }) => (
             <Dropdown.Item
-              data-aos="fade-up"
-              data-aos-easing="ease-in"
-              data-aos-once="true"
               key={action}
               onClick={() => handleFilterChange(action)}
               className="flex text-white gap-2 hover:bg-black/20 rounded-3xl"
