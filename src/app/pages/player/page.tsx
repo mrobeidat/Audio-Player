@@ -8,7 +8,7 @@ import AOS from "aos"; // animate on scroll
 import "aos/dist/aos.css"; // animate on scroll styles
 import { PuffLoader } from "react-spinners";
 import { AudioList } from "../../components/Shared/Media/AudioList";
-
+import { playlist } from "../../components/Shared/Media/AudioList";
 interface PlayerProps {}
 
 const Player: React.FC<PlayerProps> = () => {
@@ -23,14 +23,6 @@ const Player: React.FC<PlayerProps> = () => {
   const audioPlayer = useRef<HTMLAudioElement>(null); // reference to audio player
   const progressBar = useRef<HTMLInputElement>(null); // reference to progress bar
   const animationRef = useRef<number | null>(null); // reference to animation
-
-  const [playlist, setPlaylist] = useState<string[]>([
-    Audios.Song5,
-    Audios.Song1,
-    Audios.Song2,
-    Audios.Song3,
-    Audios.Song4,
-  ]);
 
   // Initializing AOS animations to set up animations on component mount
   useEffect(() => {
@@ -80,7 +72,6 @@ const Player: React.FC<PlayerProps> = () => {
         },
         body: JSON.stringify(data),
       });
-      console.log("success");
     } catch (error) {
       console.log(error);
     }
@@ -112,14 +103,21 @@ const Player: React.FC<PlayerProps> = () => {
     const audioElement = audioPlayer.current;
     if (!audioElement) return;
 
-    audioElement.muted = !audioElement.muted;
-    setIsMuted(audioElement.muted);
+    const newMutedState = !audioElement.muted;
+    setIsMuted(newMutedState);
 
     // Log the userAction to DB
-    const action = isMuted ? "Unmute" : "Mute";
+    const action = newMutedState ? "Mute" : "Unmute";
     const songTitle = AudioList[currentSongIndex]?.title;
     handleClick(action, songTitle);
   };
+
+  useEffect(() => {
+    const audioElement = audioPlayer.current;
+    if (audioElement) {
+      audioElement.muted = isMuted;
+    }
+  }, [isMuted]);
 
   // To calculate the duration
   const calculateDuration = (secs: number) => {
