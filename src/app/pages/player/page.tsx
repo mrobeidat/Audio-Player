@@ -20,9 +20,9 @@ const Player: React.FC<PlayerProps> = () => {
   const [currentSongIndex, setCurrentSongIndex] = useState<number>(0);
   const [TextMove, setTextMove] = useState(0);
 
-  const audioPlayer = useRef(null); // reference to audio player
-  const progressBar = useRef(null); // reference to progress bar
-  const animationRef = useRef(null); // reference to animation
+  const audioPlayer = useRef<HTMLAudioElement>(null); // reference to audio player
+  const progressBar = useRef<HTMLInputElement>(null); // reference to progress bar
+  const animationRef = useRef<number | null>(null); // reference to animation
 
   const [playlist, setPlaylist] = useState<string[]>([
     Audios.Song5,
@@ -41,20 +41,30 @@ const Player: React.FC<PlayerProps> = () => {
     AOS.refresh();
   }, []);
 
-  const audioElement = audioPlayer.current;
   const handleLoadedMetadata = () => {
-    const seconds = Math.floor(audioElement.duration);
-    setDuration(seconds);
-    progressBar.current.max = String(seconds);
+    const audioElement = audioPlayer.current;
+    if (audioElement) {
+      const seconds = Math.floor(audioElement.duration);
+      setDuration(seconds);
+      if (progressBar.current) {
+        progressBar.current.max = String(seconds);
+        progressBar.current.value = "0"; // Reset progress bar
+      }
+      setCurrentTime(0); // Reset current time
+    }
   };
 
   useEffect(() => {
-    if (!audioElement) return; // Check if audioElement is null
+    const audioElement = audioPlayer.current;
+    if (!audioElement) return;
     audioElement.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audioElement.addEventListener("timeupdate", updateTime);
+
     return () => {
       audioElement.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audioElement.removeEventListener("timeupdate", updateTime);
     };
-  }, [audioElement?.loadedmetadata, audioElement?.readyState]);
+  }, [currentSongIndex]);
 
   // To handle the user interaction with the audio player
   const handleClick = async (action: string, songTitle?: string) => {
@@ -78,7 +88,8 @@ const Player: React.FC<PlayerProps> = () => {
 
   // To play and pause the audio player
   const togglePlayPause = () => {
-    if (!audioPlayer.current) return;
+    const audioElement = audioPlayer.current;
+    if (!audioElement) return;
 
     const previousState = isPlaying;
     setIsPlaying(!previousState);
@@ -89,13 +100,16 @@ const Player: React.FC<PlayerProps> = () => {
       handleClick("Play", AudioList[currentSongIndex]?.title);
     } else {
       audioElement.pause();
-      cancelAnimationFrame(animationRef.current!);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
       handleClick("Pause", AudioList[currentSongIndex]?.title);
     }
   };
 
   // To Mute and Unmute the audio player
   const toggleMuteUnmute = () => {
+    const audioElement = audioPlayer.current;
     if (!audioElement) return;
 
     audioElement.muted = !audioElement.muted;
@@ -118,6 +132,7 @@ const Player: React.FC<PlayerProps> = () => {
 
   // To control the audio duration
   const handleChangeRange = () => {
+    const audioElement = audioPlayer.current;
     if (!audioElement || !progressBar.current) return;
 
     audioElement.currentTime = Number(progressBar.current.value);
@@ -135,11 +150,12 @@ const Player: React.FC<PlayerProps> = () => {
 
   // To update the current time of the audio
   const updateTime = () => {
+    const audioElement = audioPlayer.current;
     if (!audioElement || !progressBar.current) return;
 
     progressBar.current.value = String(audioElement.currentTime);
     progressBar.current.style.setProperty(
-      "$seek-before-width",
+      "--seek-before-width",
       `${(Number(progressBar.current.value) / duration) * 100}%`
     );
     setCurrentTime(Number(progressBar.current.value));
@@ -162,37 +178,34 @@ const Player: React.FC<PlayerProps> = () => {
 
   // Switch to previous song
   const playPreviousSong = () => {
-    let PreviousSongIndex = currentSongIndex - 1;
-    if (PreviousSongIndex < 0) {
-      PreviousSongIndex = playlist.length - 1;
+    let previousSongIndex = currentSongIndex - 1;
+    if (previousSongIndex < 0) {
+      previousSongIndex = playlist.length - 1;
     }
-    setCurrentSongIndex(PreviousSongIndex);
+    setCurrentSongIndex(previousSongIndex);
     setIsPlaying(true);
+    const audioElement = audioPlayer.current;
     if (audioElement) {
-      audioElement.src = playlist[PreviousSongIndex];
+      audioElement.src = playlist[previousSongIndex];
       audioElement.play();
-      audioElement.onloadedmetadata = () => {
-        setDuration(Math.floor(audioElement.duration)); // to avoid NaN in duration
-      };
+      setCurrentTime(0);
     }
-    handleClick("Prev", AudioList[PreviousSongIndex]?.title);
+    handleClick("Prev", AudioList[previousSongIndex]?.title);
   };
 
   // Switch to next song
   const playNextSong = () => {
     let nextSongIndex = currentSongIndex + 1;
-    // If it's the last song, loop back to the first song
     if (nextSongIndex >= playlist.length) {
       nextSongIndex = 0;
     }
     setCurrentSongIndex(nextSongIndex);
     setIsPlaying(true);
-    if (audioPlayer.current) {
+    const audioElement = audioPlayer.current;
+    if (audioElement) {
       audioElement.src = playlist[nextSongIndex];
       audioElement.play();
-      audioElement.onloadedmetadata = () => {
-        setDuration(Math.floor(audioElement.duration)); // to avoid NaN in duration
-      };
+      setCurrentTime(0);
     }
     handleClick("Next", AudioList[nextSongIndex]?.title);
   };
