@@ -353,7 +353,7 @@ const Player: React.FC<PlayerProps> = () => {
           ))}
 
           {/* Current time, duration, and progress bar */}
-          <div className="text-white">
+          <div className="text-white w-16">
             {calculateDuration(currentTime)}/
             {duration && !isNaN(duration) && calculateDuration(duration)}
           </div>
