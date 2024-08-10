@@ -59,7 +59,7 @@ const Player: React.FC<PlayerProps> = () => {
   }, [currentSongIndex]);
 
   // To handle the user interaction with the audio player
-  const handleClick = async (action: string, songTitle?: string) => {
+  const LogAction = async (action: string, songTitle?: string) => {
     try {
       const data = {
         userAction: action,
@@ -88,13 +88,13 @@ const Player: React.FC<PlayerProps> = () => {
     if (!previousState) {
       audioElement.play();
       animationRef.current = requestAnimationFrame(updateTime);
-      handleClick("Play", AudioList[currentSongIndex]?.title);
+      LogAction("Play", AudioList[currentSongIndex]?.title);
     } else {
       audioElement.pause();
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
-      handleClick("Pause", AudioList[currentSongIndex]?.title);
+      LogAction("Pause", AudioList[currentSongIndex]?.title);
     }
   };
 
@@ -109,7 +109,7 @@ const Player: React.FC<PlayerProps> = () => {
     // Log the userAction to DB
     const action = newMutedState ? "Mute" : "Unmute";
     const songTitle = AudioList[currentSongIndex]?.title;
-    handleClick(action, songTitle);
+    LogAction(action, songTitle);
   };
 
   useEffect(() => {
@@ -143,7 +143,7 @@ const Player: React.FC<PlayerProps> = () => {
 
     // Log "seek" and song title
     const songTitle = AudioList[currentSongIndex]?.title;
-    handleClick("Seek", songTitle);
+    LogAction("Seek", songTitle);
   };
 
   // To update the current time of the audio
@@ -171,7 +171,7 @@ const Player: React.FC<PlayerProps> = () => {
     handleChangeRange();
     const action = seconds > 0 ? "Forward" : "Backward";
     const songTitle = AudioList[currentSongIndex]?.title;
-    handleClick(action, songTitle);
+    LogAction(action, songTitle);
   };
 
   // Switch to previous song
@@ -188,7 +188,7 @@ const Player: React.FC<PlayerProps> = () => {
       audioElement.play();
       setCurrentTime(0);
     }
-    handleClick("Prev", AudioList[previousSongIndex]?.title);
+    LogAction("Prev", AudioList[previousSongIndex]?.title);
   };
 
   // Switch to next song
@@ -205,7 +205,7 @@ const Player: React.FC<PlayerProps> = () => {
       audioElement.play();
       setCurrentTime(0);
     }
-    handleClick("Next", AudioList[nextSongIndex]?.title);
+    LogAction("Next", AudioList[nextSongIndex]?.title);
   };
 
   useEffect(() => {
