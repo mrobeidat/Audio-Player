@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@vercel/analytics':
         specifier: ^1.1.3
-        version: 1.3.1(next@14.1.0(@babel/core@7.25.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.5))(react@18.3.1)
+        version: 1.3.1(next@14.1.0(@babel/core@7.8.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.5))(react@18.3.1)
       aos:
         specifier: ^2.3.4
         version: 2.3.4
@@ -25,7 +25,7 @@ importers:
         version: 8.7.1
       next:
         specifier: 14.1.0
-        version: 14.1.0(@babel/core@7.25.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.5)
+        version: 14.1.0(@babel/core@7.8.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.5)
       react:
         specifier: ^18
         version: 18.3.1
@@ -48,8 +48,11 @@ importers:
         specifier: ^2.1.5
         version: 2.1.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tsparticles:
-        specifier: ^3.2.1
+        specifier: ^3.5.0
         version: 3.5.0
+      tsparticles-engine:
+        specifier: ^2.12.0
+        version: 2.12.0
       tsparticles-slim:
         specifier: ^2.12.0
         version: 2.12.0
@@ -10179,11 +10182,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vercel/analytics@1.3.1(next@14.1.0(@babel/core@7.25.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.5))(react@18.3.1)':
+  '@vercel/analytics@1.3.1(next@14.1.0(@babel/core@7.8.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.5))(react@18.3.1)':
     dependencies:
       server-only: 0.0.1
     optionalDependencies:
-      next: 14.1.0(@babel/core@7.25.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.5)
+      next: 14.1.0(@babel/core@7.8.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.5)
       react: 18.3.1
 
   '@webassemblyjs/ast@1.8.5':
@@ -13714,9 +13717,7 @@ snapshots:
       pretty-format: 24.9.0
       throat: 4.1.0
     transitivePeerDependencies:
-      - bufferutil
       - supports-color
-      - utf-8-validate
 
   jest-jasmine2@25.5.4:
     dependencies:
@@ -14749,7 +14750,7 @@ snapshots:
 
   next-tick@1.1.0: {}
 
-  next@14.1.0(@babel/core@7.25.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.5):
+  next@14.1.0(@babel/core@7.8.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.5):
     dependencies:
       '@next/env': 14.1.0
       '@swc/helpers': 0.5.2
@@ -14759,7 +14760,7 @@ snapshots:
       postcss: 8.4.31
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      styled-jsx: 5.1.1(@babel/core@7.25.8)(react@18.3.1)
+      styled-jsx: 5.1.1(@babel/core@7.8.4)(react@18.3.1)
     optionalDependencies:
       '@next/swc-darwin-arm64': 14.1.0
       '@next/swc-darwin-x64': 14.1.0
@@ -16894,12 +16895,12 @@ snapshots:
       loader-utils: 1.4.2
       schema-utils: 1.0.0
 
-  styled-jsx@5.1.1(@babel/core@7.25.8)(react@18.3.1):
+  styled-jsx@5.1.1(@babel/core@7.8.4)(react@18.3.1):
     dependencies:
       client-only: 0.0.1
       react: 18.3.1
     optionalDependencies:
-      '@babel/core': 7.25.8
+      '@babel/core': 7.8.4
 
   stylehacks@4.0.3:
     dependencies:
