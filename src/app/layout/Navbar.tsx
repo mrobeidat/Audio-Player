@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
                 <Image
                   draggable="false"
                   src={Images.Logo}
-                  className="h-14 w-40 align-middle object-contain"
+                  className="h-8 w-24 align-middle object-contain"
                   alt="Logo"
                 />
               </a>

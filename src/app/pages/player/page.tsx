@@ -2,7 +2,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { Images } from "../../components/Shared/Media/Images"; // Importing Images for audio controls
-import Audios from "../../components/Shared/Media/Audio"; // Importing the audio file
 import { Particle } from "../../components/Shared/Particles/Particles";
 import AOS from "aos"; // animate on scroll
 import "aos/dist/aos.css"; // animate on scroll styles
