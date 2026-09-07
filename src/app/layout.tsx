@@ -1,30 +1,28 @@
-import React from "react";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import "./styles/globals.scss";
-import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react";
-import Navbar from "./layout/Navbar";
-import Footer from "./layout/Footer";
-const inter = Inter({ subsets: ["latin"] });
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
+import "@/styles/globals.css";
 
-export const metadata = {
+const inter = Inter({ subsets: ["latin"], display: "swap" });
+
+export const metadata: Metadata = {
   title: "Audio Player",
-  description: "Audio player app",
+  description: "Play a small playlist and see every interaction logged live.",
 };
 
-export default function RootLayout({ children }) {
+export const viewport: Viewport = {
+  themeColor: "#020617",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      className="bg-gradient-to-r from-slate-950 via-cyan-600 to-slate-900"
-      lang="en"
-    >
-      <Head>
-        <link rel="icon" href="/public/favicon.ico" sizes="any" />
-      </Head>
-      <body className={inter.className}>
+    <html lang="en" className={inter.className}>
+      <body>
         <Navbar />
-        {children}
-        <Footer/>
+        <main className="min-h-dvh px-4 pb-28 pt-20">{children}</main>
+        <Footer />
         <Analytics />
       </body>
     </html>
