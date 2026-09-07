@@ -13,7 +13,6 @@
     "aos": "^2.3.4",
     "axios": "^1.6.7",
     "flowbite-react": "^0.7.2",
-    "mongoose": "^8.1.2",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
@@ -25,7 +24,8 @@
     "tsparticles": "^3.5.0",
     "tsparticles-engine": "^2.12.0",
     "tsparticles-slim": "^2.12.0",
-    "url-loader": "^4.1.1"
+    "url-loader": "^4.1.1",
+    "@supabase/supabase-js": "^2.110.1"
   },
   "devDependencies": {
     "@types/aos": "^3.0.7",
