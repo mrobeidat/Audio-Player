@@ -1,11 +1,9 @@
-import React from "react";
-import Player from "./pages/player/page";
-const Home: React.FC = () => {
+import { Player } from "@/components/player/Player";
+
+export default function HomePage() {
   return (
-    <div className="flex h-screen items-center justify-center p-24 bg-gradient-to-r from-slate-950 via-cyan-600 to-slate-900">
+    <div className="grid min-h-[calc(100dvh-12rem)] place-items-center">
       <Player />
     </div>
   );
-};
-
-export default Home;
+}
